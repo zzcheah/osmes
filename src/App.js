@@ -9,8 +9,7 @@ function App() {
   return (
     <div>
       <ButtonAppBar />
-      <h3>{state.authLoading ? 'yes' : 'no'}</h3>
-
+      <h3>{state.authLoading ? 'yes' : 'no'}</h3>        <h4>cc testing</h4>
     </div>
   );
 }
