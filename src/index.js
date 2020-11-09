@@ -1,24 +1,54 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import "react-notifications/lib/notifications.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import { NotificationContainer } from "react-notifications";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-import rootReducer from "./redux/reducers";
+import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";
+import {
+  createFirestoreInstance,
+  reduxFirestore,
+  getFirestore,
+} from "redux-firestore";
 
+import rootReducer from "./redux/reducers";
+import firebase from "./firebase/config";
+
+// redux store
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(
+    reduxFirestore(firebase),
+    applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore }))
+  )
 );
+
+// react-redux-firebase config
+const rrfConfig = {
+  userProfile: "users",
+  useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
+};
+
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance,
+};
 
 ReactDOM.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <App />
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <App />
+      <NotificationContainer />
+    </ReactReduxFirebaseProvider>
   </Provider>,
   // </React.StrictMode>,
   document.getElementById("root")
