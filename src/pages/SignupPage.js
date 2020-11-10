@@ -12,8 +12,16 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+
+import { signupAction } from "../redux/actions/authActions";
 
 function Copyright() {
   return (
@@ -49,8 +57,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignupPage() {
-    const classes = useStyles();
-    const history = useHistory();
+  const [newUser, setNewUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    phone: "",
+    gender: "female",
+  });
+  const classes = useStyles();
+  const history = useHistory();
+  const firebase = useSelector((state) => state.firebase);
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signupAction(newUser));
+    history.push("/");
+  };
+
+  const handleChange = (e) => {
+    setNewUser({
+      ...newUser,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  // if (!firebase.auth.isEmpty && firebase.auth.isLoaded)
+  //   return <Redirect to="/" />;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -62,7 +96,7 @@ export default function SignupPage() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -74,6 +108,7 @@ export default function SignupPage() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -85,6 +120,7 @@ export default function SignupPage() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -96,6 +132,7 @@ export default function SignupPage() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -108,13 +145,45 @@ export default function SignupPage() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="phone"
+                label="Phone Number"
+                type="tel"
+                id="phone"
+                autoComplete="phone"
+                onChange={handleChange}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Gender</FormLabel>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender"
+                  value={newUser.gender}
+                  onChange={handleChange}
+                >
+                  <Grid>
+                    <FormControlLabel
+                      value="female"
+                      control={<Radio id="gender" />}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="male"
+                      control={<Radio id="gender" />}
+                      label="Male"
+                    />
+                  </Grid>
+                </RadioGroup>
+              </FormControl>
             </Grid>
           </Grid>
           <Button
@@ -128,7 +197,11 @@ export default function SignupPage() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link component="button" variant="body2" onClick={()=> history.push('/login')}>
+              <Link
+                component="button"
+                variant="body2"
+                onClick={() => history.push("/login")}
+              >
                 Already have an account? Login
               </Link>
             </Grid>

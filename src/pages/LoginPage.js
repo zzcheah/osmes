@@ -61,6 +61,7 @@ export default function LoginPage() {
   const history = useHistory();
   const firebase = useSelector((state) => state.firebase);
   const dispatch = useDispatch();
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(credentials);

@@ -33,3 +33,28 @@ export const logoutAction = () => {
   };
 };
 
+export const signupAction = (newUser) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    const { firstName, lastName, email, password, phone, gender } = newUser;
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((resp) => {
+        return firestore.collection("users").doc(resp.user.uid).set({
+          firstName,
+          lastName,
+          phone,
+          gender,
+        });
+      })
+      .then(() => {
+        NotificationManager.success("Signup success");
+      })
+      .catch((err) => {
+        NotificationManager.error(err.message);
+      });
+  };
+};
