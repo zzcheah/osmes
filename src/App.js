@@ -9,16 +9,27 @@ import { isLoaded, isEmpty, useFirestoreConnect } from "react-redux-firebase";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import LandingPage from "./pages/LandingPage";
+import AddProductForm from "./components/Product/AddProductForm";
 
 import { logoutAction } from "./redux/actions/authActions";
 
 // splash screen
 function AuthIsLoaded({ children }) {
   const auth = useSelector((state) => state.firebase.auth);
-  if (!isLoaded(auth))
+  const loading = useSelector((state) => state.app.loading);
+  if (!isLoaded(auth) || loading)
     return (
-      <div style={{ position: "fixed", top: "50%", left: "50%" }}>
-        <CircularProgress size="80" />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <CircularProgress size={90} />
       </div>
     );
   return children;
@@ -46,7 +57,6 @@ function PrivateRoute({ component, ...rest }) {
 }
 
 function App() {
-
   useFirestoreConnect([
     {
       collection: "products",
@@ -54,7 +64,7 @@ function App() {
       // orderBy: ["createdAt", "desc"],
       limit: 2,
       // startAt: pointer,
-      storeAs: "limited"
+      storeAs: "limited",
     },
   ]);
 
@@ -69,6 +79,15 @@ function App() {
     },
   ]);
 
+  useFirestoreConnect([
+    {
+      collection: "categories",
+      orderBy: ["name"],
+    },
+  ]);
+
+  console.log("rerendered");
+
   return (
     <BrowserRouter>
       <AuthIsLoaded>
@@ -76,6 +95,7 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
+          <PrivateRoute path="/addproduct" component={AddProductForm} />
           <PrivateRoute path="/recommendation" component={Recommendation} />
         </Switch>
       </AuthIsLoaded>

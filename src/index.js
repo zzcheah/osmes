@@ -18,7 +18,7 @@ import {
 } from "redux-firestore";
 
 import rootReducer from "./redux/reducers";
-import firebase from "./firebase/config";
+import firebase from "./configs/firebaseConfig";
 
 // redux store
 const store = createStore(

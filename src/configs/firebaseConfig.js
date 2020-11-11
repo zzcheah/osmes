@@ -20,4 +20,6 @@ firebase.initializeApp(firebaseConfig);
 // Init firestore instance
 firebase.firestore();
 
+firebase.storage();
+
 export default firebase;

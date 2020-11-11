@@ -33,7 +33,7 @@ export const logoutAction = () => {
   };
 };
 
-export const signupAction = (newUser) => {
+export const signupAction = (newUser, history) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
@@ -52,6 +52,7 @@ export const signupAction = (newUser) => {
       })
       .then(() => {
         NotificationManager.success("Signup success");
+        history.push("/");
       })
       .catch((err) => {
         NotificationManager.error(err.message);

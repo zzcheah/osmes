@@ -2,17 +2,11 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 
 import ButtonAppBar from "../components/ButtonAppBar";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
-import {
-  Card,
-  CardContent,
-  Divider,
-  Grid,
-  Typography,
-} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   main: {
