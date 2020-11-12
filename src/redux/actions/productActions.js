@@ -20,7 +20,7 @@ import { toggleLoading } from "./appActions";
 
 export const addProduct = (product, images, history) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    // dispatch(toggleLoading());
+    dispatch(toggleLoading());
 
     const firestore = getFirestore();
     const profile = getState().firebase.profile;
@@ -52,7 +52,6 @@ export const addProduct = (product, images, history) => {
                 throw error;
               },
               () => {
-                console.log("haha");
                 uploadTask.snapshot.ref.getDownloadURL().then((x) => {
                   firestore
                     .collection("products")
@@ -66,10 +65,13 @@ export const addProduct = (product, images, history) => {
           });
         }
         NotificationManager.success("Product Added");
+        dispatch(toggleLoading());
+        history.push("/");
       })
       .catch((err) => {
         console.log(err);
         NotificationManager.error(err.message);
+        dispatch(toggleLoading());
       });
   };
 };
