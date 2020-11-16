@@ -2,7 +2,7 @@ import React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-// import ButtonAppBar from "./components/ButtonAppBar";
+//import ButtonAppBar from "./components/ButtonAppBar";
 import { useSelector, useDispatch } from "react-redux";
 import { isLoaded, isEmpty, useFirestoreConnect } from "react-redux-firebase";
 
@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import LandingPage from "./pages/LandingPage";
 import AddProductForm from "./components/Product/AddProductForm";
+import ProductDetails from "./components/Product/ProductDetails"
 
 import { logoutAction } from "./redux/actions/authActions";
 
@@ -97,6 +98,7 @@ function App() {
           <Route path="/signup" component={SignupPage} />
           <PrivateRoute path="/addproduct" component={AddProductForm} />
           <PrivateRoute path="/recommendation" component={Recommendation} />
+          <PrivateRoute path="/product/:id" component={ProductDetails} />
         </Switch>
       </AuthIsLoaded>
     </BrowserRouter>

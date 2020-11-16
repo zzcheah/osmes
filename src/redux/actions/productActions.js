@@ -1,4 +1,5 @@
 import { NotificationManager } from "react-notifications";
+import { getFirestore } from "redux-firestore";
 
 import { toggleLoading } from "./appActions";
 
@@ -74,4 +75,18 @@ export const addProduct = (product, images, history) => {
         dispatch(toggleLoading());
       });
   };
+};
+
+export const rateProduct = (product) => {
+  return(dispatch,getState) => {
+    const firestore = getFirestore();
+    firestore.collection('products').add({
+
+    }).then( () => {
+      dispatch({ type: 'RATE_PRODUCT', product});
+    }).catch((err) => {
+      console.log(err);
+      dispatch({ type: 'RATE_PROJECT_ERROR', err})
+    })
+  }
 };

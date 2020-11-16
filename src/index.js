@@ -18,6 +18,7 @@ import {
 } from "redux-firestore";
 
 import rootReducer from "./redux/reducers";
+//import rootReducer from "./redux/reducers/rootReducer"
 import firebase from "./configs/firebaseConfig";
 
 // redux store

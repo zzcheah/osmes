@@ -9,7 +9,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
 import SearchBar from "material-ui-search-bar";
 
+
 import { themeColors } from "../styles/colors";
+
+import {Link} from 'react-router-dom'
+import SignInLink from "./layout/SignInLink";
+import SignOutLink from "./layout/SignOutLink";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +38,17 @@ const useStyles = makeStyles((theme) => ({
     height: "80%",
     padding: "20px 50px",
   },
+  logoNew: {
+    display: "block",
+    width: "auto",
+    height: "80%",
+    padding: "20px 50px 10px 50px",
+  },
+  link: {
+    display: "block",
+    width: "auto",
+    height: "110%",
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -45,12 +61,17 @@ export default function ButtonAppBar() {
   const classes = useStyles();
   const [inputVal, setInputVal] = useState("");
   const trending = ["Face Mask 3ply", "Hand Sanitizer 50ml", "Paracetamol 50mg"];
+  
+  // handleChange = (e) =>{
+  //   console.log(e)
+  // }
 
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-          <img src={"images/logo.png"} alt="tms" className={classes.logo} />
+        <Link position="static" className={classes.link} to="/"><img src={"images/logo.png"}className={classes.logoNew}/></Link>
+          {/* <img src={"images/logo.png"} alt="tms" className={classes.logo} /> */}
           {/* <IconButton
             edge="start"
             className={classes.menuButton}
@@ -69,13 +90,21 @@ export default function ButtonAppBar() {
             <Grid item xs={12}>
               <SearchBar
                 value={inputVal}
-                onChange={(event) => setInputVal(event.target.value)}
-                onRequestSearch={() => {}}
+                // onChange={(event) => setInputVal(event.target.value)}
+                // onRequestSearch={() => doSomethingWith(inputVal)}
+                // value={this.state.value}
+                 //onChange={this.handleChange}
               />
             </Grid>
           </Grid>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Login</Button>
+          <Grid container spacing={1} style={{ margin: "0px 200px 0px 30px" }}>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+            <SignInLink/>
+            <SignOutLink/>
+          </div>
+          </Grid>
+          {/* <Button color="inherit">Login</Button>
+          <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>
     </div>
