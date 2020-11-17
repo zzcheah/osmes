@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
       },
       root: {
         maxWidth: 400,
+        maxHeight: 400,
+        width: 250,
+        height:400,
       },
   }));
 

@@ -71,8 +71,9 @@ export default function ButtonAppBar() {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
         <Link position="static" className={classes.link} to="/"><img src={"images/logo.png"}className={classes.logoNew}/></Link>
+        {/* //press ther image then will navigate to homepage */}
           {/* <img src={"images/logo.png"} alt="tms" className={classes.logo} /> */}
-          {/* <IconButton
+          <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
@@ -82,7 +83,7 @@ export default function ButtonAppBar() {
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             News
-          </Typography> */}
+          </Typography>
           <Grid container spacing={1} style={{ margin: "0px 200px 0px 30px" }}>
             <Grid item xs={12}>
               {trending.map((str, i) => <div key={i} style={{display:"inline", marginRight:"30px"}}>{str}</div>)}
