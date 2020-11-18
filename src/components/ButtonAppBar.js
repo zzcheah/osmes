@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
 import SearchBar from "material-ui-search-bar";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 
 import { themeColors } from "../styles/colors";
@@ -15,6 +16,7 @@ import { themeColors } from "../styles/colors";
 import {Link} from 'react-router-dom'
 import SignInLink from "./layout/SignInLink";
 import SignOutLink from "./layout/SignOutLink";
+import ViewProduct from "../pages/ViewProduct";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,9 +61,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-  const [inputVal, setInputVal] = useState("");
+  const [search, setSearch] = useState('');
+  const [query, setQuery] = useState('');
   const trending = ["Face Mask 3ply", "Hand Sanitizer 50ml", "Paracetamol 50mg"];
   
+  const updateSearch = e => {
+    setSearch(e.target.value);
+    //console.log(search);
+  }
+
+  const getSearch = e => {
+    e.preventDefault();
+    console.log(search)
+    //setQuery(search);
+    return(
+      <div>
+        hello
+              {/* <Route exact path='/signup' component={ViewProduct}/> */}
+      </div>
+    )
+  }
   // handleChange = (e) =>{
   //   console.log(e)
   // }
@@ -88,14 +107,23 @@ export default function ButtonAppBar() {
             <Grid item xs={12}>
               {trending.map((str, i) => <div key={i} style={{display:"inline", marginRight:"30px"}}>{str}</div>)}
             </Grid>
-            <Grid item xs={12}>
-              <SearchBar
-                value={inputVal}
-                // onChange={(event) => setInputVal(event.target.value)}
-                // onRequestSearch={() => doSomethingWith(inputVal)}
+            <Grid item xs={12}>  
+              {/* <SearchBar
+                type = "text"
+                value={search}
+                onChange={updateSearch}
+                //onRequestSearch={getSearch}
                 // value={this.state.value}
                  //onChange={this.handleChange}
-              />
+              /> */}
+              <form onSubmit = {getSearch} className = "App" >
+                <input className = "search-bar"
+                  type = "text"
+                  placeholder = "Product Name"
+                  value = {search}
+                  onChange = {updateSearch}>
+                </input>
+              </form>
             </Grid>
           </Grid>
           <Grid container spacing={1} style={{ margin: "0px 200px 0px 30px" }}>

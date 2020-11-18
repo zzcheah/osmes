@@ -11,7 +11,6 @@ import SignupPage from "./pages/SignupPage";
 import LandingPage from "./pages/LandingPage";
 import AddProductForm from "./components/Product/AddProductForm";
 import ProductDetails from "./components/Product/ProductDetails"
-
 import { logoutAction } from "./redux/actions/authActions";
 
 // splash screen

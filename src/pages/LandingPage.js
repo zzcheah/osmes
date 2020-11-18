@@ -8,7 +8,7 @@ import ButtonAppBar from "../components/ButtonAppBar";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 
-import ViewProduct from "../components/Product/ViewProduct";
+import ViewProduct from "./ViewProduct";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { render } from "@testing-library/react";
 import ProjectDetails from '../components/Product/ProductDetails';

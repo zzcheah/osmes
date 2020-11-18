@@ -31,9 +31,6 @@ const useStyles = makeStyles({
   });
 
 const  ProductDetails = (props) => {
-    //const id = props.match.params.id;
-    //console.log(props);
-    //console.log(product.id);
     const classes = useStyles();
     const { product } = props;
     if (product) {

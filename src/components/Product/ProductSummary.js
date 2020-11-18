@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import CardMedia from '@material-ui/core/CardMedia';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -13,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "center",
     },
     media: {
-        //height: 240,
         height: 50,
         paddingTop: '100%', 
       },
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductSummary = ({products}) => {
     const classes = useStyles();
+    console.log(products);
     return (
         <React.Fragment>
             <Container component="main">
@@ -56,7 +57,7 @@ const ProductSummary = ({products}) => {
                                         color="textSecondary"
                                         component="p"
                                         >
-                                        <b>RM: {products.price} </b>   
+                                        <b>RM: {products.price} </b>
                                     </Typography>
                                 </CardContent>
                             </Card>
