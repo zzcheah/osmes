@@ -126,14 +126,14 @@ export default function ButtonAppBar() {
               </form>
             </Grid>
           </Grid>
-          <Grid container spacing={1} style={{ margin: "0px 200px 0px 30px" }}>
+          {/* <Grid container spacing={1} style={{ margin: "0px 200px 0px 30px" }}>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
             <SignInLink/>
             <SignOutLink/>
           </div>
-          </Grid>
-          {/* <Button color="inherit">Login</Button>
-          <Button color="inherit">Login</Button> */}
+          </Grid> */}
+          <Button color="inherit">Login</Button>
+          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </div>

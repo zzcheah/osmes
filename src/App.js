@@ -12,6 +12,7 @@ import LandingPage from "./pages/LandingPage";
 import AddProductForm from "./components/Product/AddProductForm";
 import ProductDetails from "./components/Product/ProductDetails"
 import { logoutAction } from "./redux/actions/authActions";
+import EditUserPage from "./pages/EditUserPage";
 
 // splash screen
 function AuthIsLoaded({ children }) {
@@ -95,6 +96,7 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
+          <PrivateRoute path="/editProfile" component={EditUserPage} />
           <PrivateRoute path="/addproduct" component={AddProductForm} />
           <PrivateRoute path="/recommendation" component={Recommendation} />
           <PrivateRoute path="/product/:id" component={ProductDetails} />

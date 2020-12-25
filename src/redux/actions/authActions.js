@@ -59,3 +59,30 @@ export const signupAction = (newUser, history) => {
       });
   };
 };
+
+export const editUserAction = (editUser, history) => {
+  return (dispatch, getState, { getFirebase, getFirestore}) => {
+    const firebase = getFirebase ();
+    const firestore = getFirestore ();
+    const { firstName, lastName, email, password, phone, gender } = editUser;
+    
+    firebase
+      // .auth()
+      // .createUserWithEmailAndPassword(email, password)
+      // .then((resp) => {
+      //   return firestore.collection("users").doc(resp.user.uid).set({
+      //     firstName,
+      //     lastName,
+      //     phone,
+      //     gender,
+      //  });
+      //})
+      .then(() => {
+        NotificationManager.success("Edit success");
+        history.push("/");
+      })
+      .catch((err) => {
+        NotificationManager.error(err.message);
+      });
+  };
+};
