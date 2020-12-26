@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-//import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,7 +12,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {Link} from 'react-router-dom'
 
 import { editUserAction} from "../redux/actions/authActions"
-import { CenterFocusStrong } from "@material-ui/icons";
+
+//////////////////////////////////////////
+// must modify all three input only can successfully change
+/////////////////////////////////////////
 
 function Copyright() {
     return (
@@ -59,10 +59,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditUserPage() {
     const auth = useSelector((state) => state.firebase.profile);
-    const defaultFname = auth.firstName;
-    const defaultLname = auth.lastName;
-    const defaultPhone = auth.phone;
-    
     
     console.log(auth);
     const [editUser, setUser] = useState({
@@ -71,7 +67,6 @@ export default function EditUserPage() {
         phone: "",
         //gender: "",
     });
-
 
     const classes = useStyles();
     const history = useHistory();
@@ -107,9 +102,6 @@ export default function EditUserPage() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                {/* <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar> */}
                 <Grid align="center">
                     <Link position="static" className={classes.link} to="/"><img src={"images/logo.png"}className={classes.logoNew}/></Link>
                 </Grid>
