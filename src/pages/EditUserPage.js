@@ -12,6 +12,8 @@ import { useSelector, useDispatch } from "react-redux";
 import {Link} from 'react-router-dom'
 
 import { editUserAction} from "../redux/actions/authActions"
+import userEvent from "@testing-library/user-event";
+import { isLoaded } from "react-redux-firebase";
 
 //////////////////////////////////////////
 // must modify all three input only can successfully change
@@ -57,10 +59,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function EditUserPage() {
     const auth = useSelector((state) => state.firebase.profile);
-    
     console.log(auth);
+    
     const [editUser, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -89,6 +92,7 @@ export default function EditUserPage() {
         ...editUser,
         [e.target.id]: e.target.defaultValue,
         });
+        console.log("default",e.target.defaultValue)
     };
 
 
@@ -110,19 +114,19 @@ export default function EditUserPage() {
                         <Grid item xs={12} >
                             <label >
                                 First Name
-                                <input type="text" id="firstName" name="firstName" defaultValue={auth.firstName} onLoad={handleLoad} onChange={handleChange} />
+                                <input type="text" id="firstName" name="firstName" defaultValue={auth.firstName} onMouseOver={handleLoad} onChange={handleChange} />
                             </label>
                         </Grid>
                         <Grid item xs={12} >
                             <label width="200%">
                                 Last Name
-                                <input type="text" id="lastName" name="lastName" defaultValue={auth.lastName} onLoad={handleLoad} onChange={handleChange} />
+                                <input type="text" id="lastName" name="lastName" defaultValue={auth.lastName} onMouseOver={handleLoad} onChange={handleChange} />
                             </label>
                         </Grid>
                         <Grid item xs={12} >
                             <label>
                                 Phone Number
-                                <input type="text" id="phone" name="phone" defaultValue={auth.phone} onLoad={handleLoad} onChange={handleChange} />
+                                <input type="text" id="phone" name="phone" defaultValue={auth.phone} onMouseOver={handleLoad} on onChange={handleChange} />
                             </label>
                         </Grid>
 
