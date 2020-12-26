@@ -7,14 +7,15 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
+import { useSelector, useDispatch } from "react-redux";
+import { isLoaded, isEmpty } from "react-redux-firebase";
 import SearchBar from "material-ui-search-bar";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useHistory, Redirect } from "react-router-dom";
 
-
 import { themeColors } from "../styles/colors";
 
-import {Link, NavLink} from 'react-router-dom'
+import { Link, NavLink } from "react-router-dom";
 import SignInLink from "./layout/SignInLink";
 import SignOutLink from "./layout/SignOutLink";
 import ViewProduct from "../pages/ViewProduct";
@@ -27,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
     background: `linear-gradient(${themeColors.blue2},transparent)`,
     backgroundColor: `${themeColors.blue3}` /*this your primary color*/,
     height: "130px",
-    // display: "flex",
-    justifyContent: "center",
-    // alignItems: "left",
   },
   logo: {
     // display: "none",
@@ -58,31 +56,39 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  linkLayout: {
+    width: "700px",
+    textAlign: "center"
+  },
 }));
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-  const [search, setSearch] = useState('');
-  const [query, setQuery] = useState('');
-  const trending = ["Face Mask 3ply", "Hand Sanitizer 50ml", "Paracetamol 50mg"];
-  
-  const updateSearch = e => {
+  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("");
+  const trending = [
+    "Face Mask 3ply",
+    "Hand Sanitizer 50ml",
+    "Paracetamol 50mg",
+  ];
+  const auth = useSelector((state) => state.firebase.auth);
+
+  const updateSearch = (e) => {
     setSearch(e.target.value);
     //console.log(search);
-  }
+  };
 
-  const getSearch = e => {
+  const getSearch = (e) => {
     e.preventDefault();
-    console.log(search)
+    console.log(search);
     //setQuery(search);
-    return(
+    return (
       <div>
         hello
-              {/* <Route exact path='/signup' component={ViewProduct}/> */}
+        {/* <Route exact path='/signup' component={ViewProduct}/> */}
       </div>
-    )
-  }
-
+    );
+  };
 
   // handleChange = (e) =>{
   //   console.log(e)
@@ -92,8 +98,14 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-        <Link position="static" className={classes.link} to="/"><img src={"images/logo.png"}className={classes.logoNew}/></Link>
-        {/* //press ther image then will navigate to homepage */}
+          <Link position="static" className={classes.link} to="/">
+            <img
+              src={"images/logo.png"}
+              alt="osmes"
+              className={classes.logoNew}
+            />
+          </Link>
+          {/* //press ther image then will navigate to homepage */}
           {/* <img src={"images/logo.png"} alt="tms" className={classes.logo} /> */}
           <IconButton
             edge="start"
@@ -106,11 +118,15 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
-          <Grid container spacing={1} style={{ margin: "0px 200px 0px 30px" }}>
+          <Grid container spacing={1} style={{ margin: "0px 0px 0px 30px" }}>
             <Grid item xs={12}>
-              {trending.map((str, i) => <div key={i} style={{display:"inline", marginRight:"30px"}}>{str}</div>)}
+              {trending.map((str, i) => (
+                <div key={i} style={{ display: "inline", marginRight: "30px" }}>
+                  {str}
+                </div>
+              ))}
             </Grid>
-            <Grid item xs={12}>  
+            <Grid item xs={12}>
               {/* <SearchBar
                 type = "text"
                 value={search}
@@ -119,25 +135,25 @@ export default function ButtonAppBar() {
                 // value={this.state.value}
                  //onChange={this.handleChange}
               /> */}
-              <form onSubmit = {getSearch} className = "App" >
-                <input className = "search-bar"
-                  type = "text"
-                  placeholder = "Product Name"
-                  value = {search}
-                  onChange = {updateSearch}>
-                </input>
+              <form onSubmit={getSearch} className="App">
+                <input
+                  className="search-bar"
+                  type="text"
+                  placeholder="Product Name"
+                  value={search}
+                  onChange={updateSearch}
+                ></input>
               </form>
             </Grid>
           </Grid>
-          {/* <Grid container spacing={1} style={{ margin: "0px 200px 0px 30px" }}>
-          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-            <SignInLink/>
-            <SignOutLink/>
+
+          <div className={classes.linkLayout}>
+            {isLoaded(auth) && !isEmpty(auth) ? (
+              <SignInLink />
+            ) : (
+              <SignOutLink />
+            )}
           </div>
-          </Grid> */}
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Login</Button>
-          <NavLink to="/editProfile" activeStyle={{colour:"inherit"}}>Edit Profile</NavLink>
         </Toolbar>
       </AppBar>
     </div>

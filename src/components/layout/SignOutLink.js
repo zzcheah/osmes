@@ -1,14 +1,19 @@
-import React from 'react';
-import {Link, NavLink} from 'react-router-dom'
+import React from "react";
+import { NavLink } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
-const SignOutLink = ()=> {
-    return(
-    <ul className="right">
-        <li><NavLink to='/signup'>Sign Up</NavLink></li>
-        <li><NavLink to='/login'>Login</NavLink></li>
-        {/* <li><NavLink to='/'></NavLink></li> */}
-    </ul>
-    )
-}
+const SignOutLink = () => {
+  return (
+    <div>
+      <NavLink style={{ color: "white" }} to="/login">
+        <Button color="inherit">Log In</Button>
+          </NavLink>
+          <div style={{display: "inline", borderLeft: "1px solid blue", height: "100%"}}></div>
+      <NavLink style={{ color: "white" }} to="/signup">
+        <Button color="inherit">Sign Up</Button>
+      </NavLink>
+    </div>
+  );
+};
 
-export default SignOutLink
+export default SignOutLink;

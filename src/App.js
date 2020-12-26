@@ -9,6 +9,7 @@ import { isLoaded, isEmpty, useFirestoreConnect } from "react-redux-firebase";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import LandingPage from "./pages/LandingPage";
+import ProjectDetails from "./components/Product/ProductDetails";
 import AddProductForm from "./components/Product/AddProductForm";
 import ProductDetails from "./components/Product/ProductDetails"
 import { logoutAction } from "./redux/actions/authActions";
@@ -58,27 +59,7 @@ function PrivateRoute({ component, ...rest }) {
 }
 
 function App() {
-  useFirestoreConnect([
-    {
-      collection: "products",
-      // where: ["createdBy", "==", auth.uid],
-      // orderBy: ["createdAt", "desc"],
-      limit: 2,
-      // startAt: pointer,
-      storeAs: "limited",
-    },
-  ]);
 
-  useFirestoreConnect([
-    {
-      collection: "products",
-      // where: ["createdBy", "==", auth.uid],
-      // orderBy: ["createdAt", "desc"],
-      // limit: 2,
-      // startAt: pointer,
-      storeAs: "unlimited",
-    },
-  ]);
 
   useFirestoreConnect([
     {
@@ -93,9 +74,10 @@ function App() {
     <BrowserRouter>
       <AuthIsLoaded>
         <Switch>
-          <Route exact path="/" component={LandingPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
+          <Route exact path="/" component={LandingPage} />
+          <Route path="/product/:id" component={ProjectDetails} />
           <PrivateRoute path="/editProfile" component={EditUserPage} />
           <PrivateRoute path="/addproduct" component={AddProductForm} />
           <PrivateRoute path="/recommendation" component={Recommendation} />

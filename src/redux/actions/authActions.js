@@ -25,7 +25,7 @@ export const logoutAction = () => {
       .signOut()
       .then(() => {
         firebase.logout();
-        NotificationManager.info("Logout Success");
+        NotificationManager.success("Logout Success");
       })
       .catch((err) => {
         NotificationManager.error(err.message);
