@@ -16,7 +16,7 @@ import userEvent from "@testing-library/user-event";
 import { isLoaded } from "react-redux-firebase";
 
 //////////////////////////////////////////
-// must modify all three input only can successfully change
+// must modify all three input only can successfully change or use mouse hover tru the text field to load the data
 /////////////////////////////////////////
 
 function Copyright() {
