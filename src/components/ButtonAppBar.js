@@ -46,16 +46,6 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     height: "110%",
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  linkLayout: {
-    width: "700px",
-    textAlign: "center",
-  },
 }));
 
 export default function ButtonAppBar() {
@@ -108,17 +98,6 @@ export default function ButtonAppBar() {
           </Link>
           {/* //press ther image then will navigate to homepage */}
           {/* <img src={"images/logo.png"} alt="tms" className={classes.logo} /> */}
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            News
-          </Typography>
           <Grid container spacing={1} style={{ margin: "0px 0px 0px 30px" }}>
             <Grid item xs={12}>
               {trending.map((str, i) => (
@@ -148,13 +127,7 @@ export default function ButtonAppBar() {
             </Grid>
           </Grid>
 
-          <div className={classes.linkLayout}>
-            {isLoaded(auth) && !isEmpty(auth) ? (
-              <SignInLink />
-            ) : (
-              <SignOutLink />
-            )}
-          </div>
+          {isLoaded(auth) && !isEmpty(auth) ? <SignInLink /> : <SignOutLink />}
         </Toolbar>
       </AppBar>
     </div>
