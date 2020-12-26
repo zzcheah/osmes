@@ -111,7 +111,7 @@ export default function EditUserPage() {
                     <LockOutlinedIcon />
                 </Avatar> */}
                 <Grid align="center">
-                    <Link position="static" className={classes.link} to="/"><img src={"images/logo.png"}className={classes.logoNew}/></Link>
+                    <Link position="static" className={classes.link} to="/"><img alt="osmes" src={"images/logo.png"}className={classes.logoNew}/></Link>
                 </Grid>
                 <Typography component="h1" variant="h5" align="center">
                     <h4>Profile Management</h4>
