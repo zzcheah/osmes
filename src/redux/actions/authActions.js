@@ -64,25 +64,45 @@ export const editUserAction = (editUser, history) => {
   return (dispatch, getState, { getFirebase, getFirestore}) => {
     const firebase = getFirebase ();
     const firestore = getFirestore ();
-    const { firstName, lastName, email, password, phone, gender } = editUser;
+    const { firstName, lastName, phone } = editUser;
+    const user = firebase.auth().currentUser;
+    console.log('User ID: ', editUser);
     
     firebase
-      // .auth()
-      // .createUserWithEmailAndPassword(email, password)
+      .auth()
+      .onAuthStateChanged((resp) => {
+        if(resp){
+          return firestore.collection("users").doc(user.uid).set({
+            firstName,
+            lastName,
+            phone,
+          })
+          .then(() => {
+            NotificationManager.success("Edit success");
+            history.push("/login");
+          })
+          .catch((err) => {
+            NotificationManager.error(err.message);
+          });
+        } else {
+          
+        }
+      //});
+      //.updateCurrentUser()
       // .then((resp) => {
       //   return firestore.collection("users").doc(resp.user.uid).set({
       //     firstName,
       //     lastName,
       //     phone,
-      //     gender,
       //  });
-      //})
-      .then(() => {
-        NotificationManager.success("Edit success");
-        history.push("/");
-      })
-      .catch((err) => {
-        NotificationManager.error(err.message);
-      });
+      // })
+      // .then(() => {
+      //   NotificationManager.success("Edit success");
+      //   history.push("/");
+      // })
+      // .catch((err) => {
+      //   NotificationManager.error(err.message);
+      // });
+    });
   };
 };

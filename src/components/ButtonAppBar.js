@@ -9,11 +9,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
 import SearchBar from "material-ui-search-bar";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 
 import { themeColors } from "../styles/colors";
 
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import SignInLink from "./layout/SignInLink";
 import SignOutLink from "./layout/SignOutLink";
 import ViewProduct from "../pages/ViewProduct";
@@ -81,6 +82,8 @@ export default function ButtonAppBar() {
       </div>
     )
   }
+
+
   // handleChange = (e) =>{
   //   console.log(e)
   // }
@@ -134,6 +137,7 @@ export default function ButtonAppBar() {
           </Grid> */}
           <Button color="inherit">Login</Button>
           <Button color="inherit">Login</Button>
+          <NavLink to="/editProfile" activeStyle={{colour:"inherit"}}>Edit Profile</NavLink>
         </Toolbar>
       </AppBar>
     </div>
