@@ -82,8 +82,6 @@ export default function EditUserPage() {
         ...editUser,
         [e.target.id]: e.target.value,
         });
-        console.log("defaukt",e.target.value)
-
     };
 
     const handleLoad = (e) => {
@@ -91,7 +89,6 @@ export default function EditUserPage() {
         ...editUser,
         [e.target.id]: e.target.defaultValue,
         });
-        console.log("defaukt",e.target.defaultValue)
     };
 
 
