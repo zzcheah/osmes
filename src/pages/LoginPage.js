@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
@@ -20,10 +20,7 @@ import { loginAction } from "../redux/actions/authActions";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
+      {"Copyright ©OSMeS "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -88,13 +85,13 @@ export default function LoginPage() {
       <CssBaseline />
       <div className={classes.paper}>
         <Grid align="center">
-          <Link position="static" className={classes.link} to="/">
+          <NavLink position="static" className={classes.link} to="/">
             <img
               alt="osmes"
               src={"images/logo.png"}
               className={classes.logoNew}
             />
-          </Link>
+          </NavLink>
         </Grid>
         <Typography component="h1" variant="h5">
           Login

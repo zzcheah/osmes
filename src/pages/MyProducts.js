@@ -4,7 +4,9 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import ButtonAppBar from "../components/ButtonAppBar";
-import ViewProduct from "../components/Product/ViewProduct";
+
+import { useSelector } from "react-redux";
+import { useFirestoreConnect } from "react-redux-firebase";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -15,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function LandingPage() {
+export default function MyProducts() {
+  useFirestoreConnect([{ collection: "highlights" }]);
   const classes = useStyles();
 
     return (
@@ -24,7 +27,7 @@ export default function LandingPage() {
         <ButtonAppBar />
         <Container component="main">
           <div className={classes.main}>
-            <ViewProduct/>
+            
           </div>
         </Container>
       </React.Fragment>
