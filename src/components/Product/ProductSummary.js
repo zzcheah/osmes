@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductSummary = ({products}) => {
     const classes = useStyles();
-    console.log(products);
+    //console.log(products);
     return (
         <React.Fragment>
             <Container component="main">

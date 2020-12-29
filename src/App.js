@@ -12,8 +12,12 @@ import ProductDetails from "./pages/ProductDetails";
 import AddProductForm from "./pages/AddProductForm";
 import MyProducts from "./pages/MyProducts";
 import EditUserPage from "./pages/EditUserPage";
+import ProductSummary from "./components/Product/ProductSummary"
 
 import { logoutAction } from "./redux/actions/authActions";
+import searchProduct from "./components/Product/searchProduct";
+import ViewProduct from "./components/Product/ViewProduct";
+
 
 // splash screen
 function AuthIsLoaded({ children }) {
@@ -78,6 +82,7 @@ function App() {
           <Route path="/signup" component={SignupPage} />
           <Route exact path="/" component={LandingPage} />
           <Route path="/product/:id" component={ProductDetails} />
+          <Route path="/searchProduct" component={searchProduct} />
           <PrivateRoute path="/editProfile" component={EditUserPage} />
           <PrivateRoute path="/addproduct" component={AddProductForm} />
           <PrivateRoute path="/myproducts" component={MyProducts} />
