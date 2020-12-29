@@ -34,17 +34,15 @@ export const addProduct = (product, images, history) => {
         ...product,
         seller: userId,
         sellerName: profile.firstName + " " + profile.lastName,
-        createdAt: new Date(),
+        createdAt: firestore.Timestamp.fromDate(new Date()),
       })
       .then((resp) => {
         const productId = resp.id;
 
         if (images.length !== 0) {
           images.forEach((image) => {
-            console.log(image.name);
-            const uploadTask = storage
-              .ref(`images/${productId}/${image.name}`)
-              .put(image);
+            const filePath = `images/${productId}/${image.name}`;
+            const uploadTask = storage.ref(filePath).put(image);
 
             uploadTask.on(
               "state_changed",
@@ -53,12 +51,16 @@ export const addProduct = (product, images, history) => {
                 throw error;
               },
               () => {
-                uploadTask.snapshot.ref.getDownloadURL().then((x) => {
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                   firestore
                     .collection("products")
                     .doc(productId)
                     .update({
-                      urls: firestore.FieldValue.arrayUnion(x),
+                      images: firestore.FieldValue.arrayUnion({
+                        name: image.name,
+                        url: downloadURL,
+                        path: filePath,
+                      }),
                     });
                 });
               }
@@ -78,15 +80,17 @@ export const addProduct = (product, images, history) => {
 };
 
 export const rateProduct = (product) => {
-  return(dispatch,getState) => {
+  return (dispatch, getState) => {
     const firestore = getFirestore();
-    firestore.collection('products').add({
-
-    }).then( () => {
-      dispatch({ type: 'RATE_PRODUCT', product});
-    }).catch((err) => {
-      console.log(err);
-      dispatch({ type: 'RATE_PROJECT_ERROR', err})
-    })
-  }
+    firestore
+      .collection("products")
+      .add({})
+      .then(() => {
+        dispatch({ type: "RATE_PRODUCT", product });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: "RATE_PROJECT_ERROR", err });
+      });
+  };
 };

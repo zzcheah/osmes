@@ -40,14 +40,14 @@ const  ProductDetails = (props) => {
     if (product) {
         return (
           <React.Fragment>
-            <CssBaseline/>
+            <CssBaseline />
             <ButtonAppBar />
             <div className={classes.main}>
               <Card className={classes.root}>
                 <CardActionArea>
                   <CardMedia
                     className={classes.media}
-                    image={product.urls}
+                    image={product.images ? product.images[0].url : null}
                     title={product.name}
                   />
                   <CardContent>

@@ -10,6 +10,7 @@ import SignupPage from "./pages/SignupPage";
 import LandingPage from "./pages/LandingPage";
 import ProductDetails from "./pages/ProductDetails";
 import AddProductForm from "./pages/AddProductForm";
+import EditProductForm from "./pages/EditProductForm";
 import MyProducts from "./pages/MyProducts";
 import EditUserPage from "./pages/EditUserPage";
 import ProductSummary from "./components/Product/ProductSummary"
@@ -85,6 +86,7 @@ function App() {
           <Route path="/searchProduct" component={searchProduct} />
           <PrivateRoute path="/editProfile" component={EditUserPage} />
           <PrivateRoute path="/addproduct" component={AddProductForm} />
+          <PrivateRoute path="/editproduct/:id" component={EditProductForm} />
           <PrivateRoute path="/myproducts" component={MyProducts} />
           <PrivateRoute path="/recommendation" component={Recommendation} />
         </Switch>
