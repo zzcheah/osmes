@@ -62,7 +62,7 @@ class ViewProduct extends React.Component {
                   {filteredProducts &&
                     filteredProducts.map((products) => {
                       return (
-                        <Link key={products.id} to={"/product/" + products.id}>
+                        <Link key={products.id} to={"/product/" + products.id} style={{ textDecoration: 'none' }}>
                           <ProductSummary
                             products={products}
                             key={products.id}
@@ -114,7 +114,7 @@ class ViewProduct extends React.Component {
                   {filteredProducts &&
                     filteredProducts.map((products) => {
                       return (
-                        <Link to={"/product/" + products.id}>
+                        <Link to={"/product/" + products.id} style={{ textDecoration: 'none' }}>
                           <ProductSummary
                             products={products}
                             key={products.id}
