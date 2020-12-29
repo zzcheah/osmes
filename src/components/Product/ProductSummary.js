@@ -38,7 +38,7 @@ const ProductSummary = ({products}) => {
                             <Card  className={classes.root}>
                             <CardMedia
                             className={classes.media}
-                            image= {products.urls}
+                            image= {products.images?products.images[0].url:null}
                             title= {products.name}
                             />
                                 <CardContent>
