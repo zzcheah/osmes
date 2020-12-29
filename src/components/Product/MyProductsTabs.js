@@ -18,6 +18,7 @@ import ReactImages from "../Utils/ReactImages";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
+import ReactCarousel from "../Utils/ReactCarousel";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,14 +59,15 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     padding: "30px 0px",
+    flexGrow: 1,
     borderRight: `1px solid ${theme.palette.divider}`,
-    width: "250px",
-    minWidth: "250px",
+    maxWidth: "250px",
   },
 }));
 
 export default function MyProductsTabs() {
   const classes = useStyles();
+  const history = useHistory();
   const [value, setValue] = React.useState(0);
   const uid = useSelector((state) => state.firebase.auth.uid);
   useFirestoreConnect([
@@ -108,10 +110,10 @@ export default function MyProductsTabs() {
           <Tab key={product.id} label={product.name} {...a11yProps(index)} />
         ))}
       </Tabs>
-      <div>
+      <div style={{ flexGrow: "2" }}>
         {myProducts.map((product, index) => (
           <TabPanel key={product.id} value={value} index={index}>
-            {MyProductDetail(product)}
+            {MyProductDetail(product, history)}
           </TabPanel>
         ))}
       </div>
@@ -119,26 +121,22 @@ export default function MyProductsTabs() {
   );
 }
 
-function MyProductDetail(product) {
-  const history = useHistory();
-
+function MyProductDetail(product, history) {
   const classes = {
     root: {},
     images: {
       height: "auto",
-      width: "300px",
+      maxWidth: "300px",
+      width: "100%",
       display: "block",
       marginLeft: "auto",
       marginRight: "auto",
-    },
-    button: {
-      padding: "10px",
     },
   };
 
   var images = [];
   product.images.forEach((image) => {
-    images.push({ source: image.url });
+    images.push(image.url);
   });
 
   return (
@@ -146,8 +144,11 @@ function MyProductDetail(product) {
       <Typography variant="h6" gutterBottom>
         {product.name}
       </Typography>
-      <div style={classes.images}>
+      {/* <div style={classes.images}>
         <ReactImages images={images} />
+      </div> */}
+      <div style={classes.images}>
+        <ReactCarousel images={images} />
       </div>
 
       <TableContainer>
@@ -200,7 +201,6 @@ function MyProductDetail(product) {
         <Button
           variant="contained"
           color="primary"
-          className={classes.button}
           startIcon={<EditIcon />}
           onClick={() => history.push(`/editproduct/${product.id}`)}
         >
