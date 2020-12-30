@@ -7,13 +7,13 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    height: "100%",
     display: "flex",
     flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: "56.25%", // 16:9
-    minHeight: "300px",
+    paddingTop: "100%", // 16:9
+    // minHeight: "300px",
+    height: "100%",
   },
   cardContent: {
     flexGrow: 1,
@@ -28,7 +28,7 @@ export default function ReactAlbum(props) {
   return (
     <Grid justify="center" container spacing={1}>
       {cards.map((card, index) => (
-        <Grid item key={card} xs={12} sm={6}>
+        <Grid item key={card} xs={9} sm={6}>
           <Card className={classes.card}>
             <CardActionArea
               onClick={() => {

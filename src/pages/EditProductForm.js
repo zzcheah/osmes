@@ -44,6 +44,16 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  container: {
+    maxWidth: "450px",
+    flexGrow: "1",
+    width: "100%",
+    padding: "0px 20px",
+  },
+  album: {
+    marginTop: theme.spacing(8),
+    textAlign: "center",
+  },
 }));
 
 export default function EditProductForm() {
@@ -123,136 +133,156 @@ export default function EditProductForm() {
     <React.Fragment>
       <CssBaseline />
       <ButtonAppBar />
-      <Container component="main" maxWidth="sm">
-        <div className={classes.root}>
-          <Typography component="h1" variant="h5">
-            Fill in Product Detail
-          </Typography>
-          <form className={classes.form} onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              {/* name */}
-              <Grid item xs={12}>
-                <TextField
-                  label="Product Name"
-                  id="name"
-                  required
-                  fullWidth
-                  value={product.name}
-                  onChange={handleChange}
-                />
-              </Grid>
-              {/* stock */}
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="stock"
-                  label="Stock"
-                  type="number"
-                  value={product.stock}
-                  InputProps={{
-                    inputProps: {
-                      min: 0,
-                    },
-                  }}
-                  required
-                  fullWidth
-                  onChange={handleChange}
-                />
-              </Grid>
-              {/* price */}
-              <Grid item xs={12} sm={6}>
-                <FormControl className={classes.formControl} required>
-                  <InputLabel>Price</InputLabel>
-                  <Input
-                    id="price"
-                    value={product.price}
-                    onChange={handleChange}
-                    startAdornment={
-                      <InputAdornment position="start">RM </InputAdornment>
-                    }
-                  />
-                </FormControl>
-              </Grid>
-              {/* categories */}
-              <Grid item xs={12} sm={6}>
-                <FormControl className={classes.formControl} required>
-                  <InputLabel>Category</InputLabel>
-                  <Select
-                    labelId="category"
-                    id="category"
-                    value={product.category}
-                    onChange={(e) => {
-                      setProduct({ ...product, category: e.target.value });
-                    }}
-                  >
-                    {categories &&
-                      categories.map((category, index) => (
-                        <MenuItem key={index} value={category.name}>
-                          {category.name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              {/* brand */}
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Product Brand"
-                  id="brand"
-                  required
-                  fullWidth
-                  value={product.brand}
-                  onChange={handleChange}
-                />
-              </Grid>
-              {/* shipfrom */}
-              <Grid item xs={12}>
-                <TextField
-                  label="Ship From"
-                  id="shipFrom"
-                  required
-                  fullWidth
-                  value={product.shipFrom}
-                  onChange={handleChange}
-                />
-              </Grid>
-              {/* desc */}
-              <Grid item xs={12}>
-                <TextField
-                  id="desc"
-                  label="Product Description"
-                  multiline
-                  fullWidth
-                  variant="outlined"
-                  required
-                  value={product.desc}
-                  onChange={handleChange}
-                />
-              </Grid>
-            </Grid>
-            <Box height="5px" />
-            <ReactAlbum
-              images={oldProduct?oldProduct.images.map((image) => image.url):[]}
-              cardActions={customCardActions}
-            />
-            <DropzoneArea onChange={handleImages} />
+      <Container component="main" maxWidth="md">
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {/* <Container component="main" maxWidth="sm"> */}
+          <div className={classes.container}>
+            <div className={classes.album}>
+              <Typography component="h1" variant="h5" gutterBottom>
+                Previous Product Images
+              </Typography>
+              <Box height="15px" />
+              <ReactAlbum
+                images={
+                  oldProduct ? oldProduct.images.map((image) => image.url) : []
+                }
+                cardActions={customCardActions}
+              />
+            </div>
+          </div>
 
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Add Product
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
+          {/* </Container> */}
+          {/* <Container component="main" maxWidth="sm"> */}
+          <div className={classes.container}>
+            <div className={classes.root}>
+              <Typography component="h1" variant="h5">
+                Fill in Product Detail
+              </Typography>
+              <form className={classes.form} onSubmit={handleSubmit}>
+                <Grid container spacing={2}>
+                  {/* name */}
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Product Name"
+                      id="name"
+                      required
+                      fullWidth
+                      value={product.name}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  {/* stock */}
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="stock"
+                      label="Stock"
+                      type="number"
+                      value={product.stock}
+                      InputProps={{
+                        inputProps: {
+                          min: 0,
+                        },
+                      }}
+                      required
+                      fullWidth
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  {/* price */}
+                  <Grid item xs={12} sm={6}>
+                    <FormControl className={classes.formControl} required>
+                      <InputLabel>Price</InputLabel>
+                      <Input
+                        id="price"
+                        value={product.price}
+                        onChange={handleChange}
+                        startAdornment={
+                          <InputAdornment position="start">RM </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  </Grid>
+                  {/* categories */}
+                  <Grid item xs={12} sm={6}>
+                    <FormControl className={classes.formControl} required>
+                      <InputLabel>Category</InputLabel>
+                      <Select
+                        labelId="category"
+                        id="category"
+                        value={product.category}
+                        onChange={(e) => {
+                          setProduct({ ...product, category: e.target.value });
+                        }}
+                      >
+                        {categories &&
+                          categories.map((category, index) => (
+                            <MenuItem key={index} value={category.name}>
+                              {category.name}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  {/* brand */}
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      label="Product Brand"
+                      id="brand"
+                      required
+                      fullWidth
+                      value={product.brand}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  {/* shipfrom */}
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Ship From"
+                      id="shipFrom"
+                      required
+                      fullWidth
+                      value={product.shipFrom}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  {/* desc */}
+                  <Grid item xs={12}>
+                    <TextField
+                      id="desc"
+                      label="Product Description"
+                      multiline
+                      fullWidth
+                      variant="outlined"
+                      required
+                      value={product.desc}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                </Grid>
+                <Box height="5px" />
+
+                <DropzoneArea onChange={handleImages} />
+
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                    >
+                      Add Product
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </div>
+
+          {/* </Container> */}
         </div>
       </Container>
-      <button onClick={() => console.log(images)}>test</button>
     </React.Fragment>
   );
 }
