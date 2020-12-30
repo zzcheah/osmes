@@ -84,7 +84,7 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route path="/product/:id" component={ProductDetails} />
           <Route path="/searchProduct" component={searchProduct} />
-          <PrivateRoute path="/editProfile" component={EditUserPage} />
+          <PrivateRoute path="/editProfile/:id" component={EditUserPage} />
           <PrivateRoute path="/addproduct" component={AddProductForm} />
           <PrivateRoute path="/editproduct/:id" component={EditProductForm} />
           <PrivateRoute path="/myproducts" component={MyProducts} />

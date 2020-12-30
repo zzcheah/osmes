@@ -58,8 +58,8 @@ export default function ButtonAppBar() {
     "Paracetamol 50mg",
   ];
   const auth = useSelector((state) => state.firebase.auth);
-  const filteredProducts= useSelector((state) => state.firestore.ordered.products);
-  console.log("fil",filteredProducts);
+  //const filteredProducts= useSelector((state) => state.firestore.ordered.products);
+  //console.log("fil",filteredProducts);
   const history = useHistory();
 
   const updateSearch = (e) => {

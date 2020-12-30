@@ -7,17 +7,18 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "../configs/firebaseConfig"
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, useParams, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {Link} from 'react-router-dom'
+import TextField from "@material-ui/core/TextField";
+import { useFirestoreConnect } from "react-redux-firebase";
 
 import { editUserAction} from "../redux/actions/authActions"
 import userEvent from "@testing-library/user-event";
 import { isLoaded } from "react-redux-firebase";
+import ButtonAppBar from "../components/ButtonAppBar"
+import { FontDownload } from "@material-ui/icons";
 
-//////////////////////////////////////////
-// must modify all three input only can successfully change or use mouse hover tru the text field to load the data
-/////////////////////////////////////////
 
 function Copyright() {
     return (
@@ -57,23 +58,55 @@ const useStyles = makeStyles((theme) => ({
     height: "50%",
     padding: "20px 50px 10px 50px",
   },
+
+  label: {
+    
+  },
+
+  input: {
+    width: "100%",
+    height: "50px",
+    padding: "5px",
+    borderRadius: "5px",
+    borderWidth: "2px",
+    fontSize: "16px",
+    borderColor: "#00bfff"
+  },
 }));
 
 
 export default function EditUserPage() {
-    const auth = useSelector((state) => state.firebase.profile);
-    console.log(auth);
-    
     const [editUser, setUser] = useState({
         firstName: "",
         lastName: "",
         phone: "",
-        //gender: "",
     });
 
+    const auth = useSelector((state) => state.firebase.profile);
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
+    const { id } = useParams();
+
+    useFirestoreConnect([
+        {
+          collection: "users",
+          doc: id,
+          storeAs: "ep",
+        },
+    ]);
+
+    useEffect(() => {
+        if (auth) {
+            setUser({
+                firstName: auth.firstName,
+                lastName: auth.lastName,
+                phone: auth.phone,
+          });
+        }
+      }, [auth]);
+
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -86,88 +119,115 @@ export default function EditUserPage() {
         [e.target.id]: e.target.value,
         });
     };
-
-    const handleLoad = (e) => {
-        setUser({
-        ...editUser,
-        [e.target.id]: e.target.defaultValue,
-        });
-        console.log("default",e.target.defaultValue)
-    };
-
-
-    if (!firebase.auth.isEmpty && firebase.auth.isLoaded)
-    return <Redirect to="/" />;
-
+    var logoURL = "images/logo.png";
     return (
-        <Container component="main" maxWidth="xs">
+        <React.Fragment>
             <CssBaseline />
-            <div className={classes.paper}>
-                <Grid align="center">
-                    <Link position="static" className={classes.link} to="/"><img alt="osmes" src={"images/logo.png"}className={classes.logoNew}/></Link>
-                </Grid>
-                <Typography component="h1" variant="h5" align="center">
-                    <h4>Profile Management</h4>
-                </Typography>
-                <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                    <Grid container spacing={2} >
-                        <Grid item xs={12} >
-                            <label >
-                                First Name
-                                <input type="text" id="firstName" name="firstName" defaultValue={auth.firstName} onMouseOver={handleLoad} onChange={handleChange} />
-                            </label>
-                        </Grid>
-                        <Grid item xs={12} >
-                            <label width="200%">
-                                Last Name
-                                <input type="text" id="lastName" name="lastName" defaultValue={auth.lastName} onMouseOver={handleLoad} onChange={handleChange} />
-                            </label>
-                        </Grid>
-                        <Grid item xs={12} >
-                            <label>
-                                Phone Number
-                                <input type="text" id="phone" name="phone" defaultValue={auth.phone} onMouseOver={handleLoad} on onChange={handleChange} />
-                            </label>
-                        </Grid>
+            <ButtonAppBar />
+            <Container component="main" maxWidth="xs">
+                <div className={classes.root}>
+                    {/* <Grid align="center">
+                        <NavLink position="static" className={classes.link} to="/">
+                            <img
+                            alt="osmes"
+                            src={"images/logo.png"}
+                            className={classes.logoNew}
+                            />
+                            
+                        </NavLink> 
+                    </Grid> */}
+                    <Typography component="h1" variant="h4" align="center">
+                        <h4>Profile Management</h4>
+                    </Typography>
+                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                        <Grid container spacing={2} >
+                            <Grid item xs={12} >
+                            <Typography variant="body2" color="textSecondary" align="left">
+                                {"First Name*"}
+                            </Typography>
+                                <label>
+                                    <input className={classes.input} type="text" id="firstName" name="firstName" defaultValue={auth.firstName} onChange={handleChange} />
+                                </label>
+                                {/* <TextField
+                                    label="First Name"
+                                    id="firstName"
+                                    required
+                                    fullWidth
+                                    defaultvalue={auth.firstName}
+                                    onChange={handleChange}
+                                    /> */}
+                            </Grid>
+                            <Grid item xs={12} >
+                                <Typography variant="body2" color="textSecondary" align="left" >
+                                    {"Last Name*"}
+                                </Typography>
+                                <label>
+                                    <input className={classes.input} type="text" id="lastName" name="lastName" defaultValue={auth.lastName} onChange={handleChange} />
+                                </label>
+                                {/* <TextField
+                                    label="Last Name"
+                                    id="lastName"
+                                    required
+                                    fullWidth
+                                    defaultvalue={auth.lastName}
+                                    onChange={handleChange}
+                                    /> */}
+                            </Grid>
+                            <Grid item xs={12} >
+                                <Typography variant="body2" color="textSecondary" align="left">
+                                    {"Phone Number*"}
+                                </Typography>
+                                <label>
+                                    <input className={classes.input} type="text" id="phone" name="phone" defaultValue={auth.phone} on onChange={handleChange} />
+                                </label>
+                                {/* <TextField
+                                    label="Phone"
+                                    id="phone"
+                                    required
+                                    fullWidth
+                                    defaultvalue={auth.phone}
+                                    onChange={handleChange}
+                                    /> */}
+                            </Grid>
 
-                        {/* <Grid item xs={12}>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend">Gender</FormLabel>
-                                <RadioGroup 
-                                name="gender"
-                                value={auth.gender}
-                                onChange={handleChange}>
-                                <Grid>
-                                <FormControlLabel
-                                value="female"
-                                control={<Radio id="gender" />}
-                                label="Female"
-                                />
-                                <FormControlLabel
-                                value="male"
-                                control={<Radio id="gender" />}
-                                label="Male"
-                                />
-                                </Grid>
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid> */}
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Save
-                    </Button>
-                </form>
-            </div>
-            <Box mt={5}>
-                <Copyright />
-            </Box>
-        </Container>
-        
+                            {/* <Grid item xs={12}>
+                                <FormControl component="fieldset">
+                                    <FormLabel component="legend">Gender</FormLabel>
+                                    <RadioGroup 
+                                    name="gender"
+                                    value={auth.gender}
+                                    onChange={handleChange}>
+                                    <Grid>
+                                    <FormControlLabel
+                                    value="female"
+                                    control={<Radio id="gender" />}
+                                    label="Female"
+                                    />
+                                    <FormControlLabel
+                                    value="male"
+                                    control={<Radio id="gender" />}
+                                    label="Male"
+                                    />
+                                    </Grid>
+                                    </RadioGroup>
+                                </FormControl>
+                            </Grid> */}
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Save
+                        </Button>
+                    </form>
+                </div>
+                <Box mt={5}>
+                    <Copyright />
+                </Box>
+            </Container>
+        </React.Fragment>
     );
 }

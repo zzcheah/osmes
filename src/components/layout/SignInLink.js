@@ -8,7 +8,7 @@ import Fade from "@material-ui/core/Fade";
 
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import { useSelector } from "react-redux";
 import { logoutAction } from "../../redux/actions/authActions";
 
 const SignInLink = () => {
@@ -16,6 +16,8 @@ const SignInLink = () => {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const uid = useSelector((state) => state.firebase.auth.uid);
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -49,7 +51,7 @@ const SignInLink = () => {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={() => history.push("/editProfile")}>
+        <MenuItem onClick={() => history.push(`/editProfile/${uid}`)}>
           Edit Profile
         </MenuItem>
         <MenuItem onClick={() => history.push("/myproducts")}>
