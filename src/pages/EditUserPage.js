@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-//import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,7 +12,12 @@ import { useSelector, useDispatch } from "react-redux";
 import {Link} from 'react-router-dom'
 
 import { editUserAction} from "../redux/actions/authActions"
-import { CenterFocusStrong } from "@material-ui/icons";
+import userEvent from "@testing-library/user-event";
+import { isLoaded } from "react-redux-firebase";
+
+//////////////////////////////////////////
+// must modify all three input only can successfully change or use mouse hover tru the text field to load the data
+/////////////////////////////////////////
 
 function Copyright() {
     return (
@@ -57,21 +59,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function EditUserPage() {
     const auth = useSelector((state) => state.firebase.profile);
-    const defaultFname = auth.firstName;
-    const defaultLname = auth.lastName;
-    const defaultPhone = auth.phone;
-    
-    
     console.log(auth);
+    
     const [editUser, setUser] = useState({
         firstName: "",
         lastName: "",
         phone: "",
         //gender: "",
     });
-
 
     const classes = useStyles();
     const history = useHistory();
@@ -87,8 +85,6 @@ export default function EditUserPage() {
         ...editUser,
         [e.target.id]: e.target.value,
         });
-        console.log("defaukt",e.target.value)
-
     };
 
     const handleLoad = (e) => {
@@ -96,7 +92,7 @@ export default function EditUserPage() {
         ...editUser,
         [e.target.id]: e.target.defaultValue,
         });
-        console.log("defaukt",e.target.defaultValue)
+        console.log("default",e.target.defaultValue)
     };
 
 
@@ -107,9 +103,6 @@ export default function EditUserPage() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                {/* <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar> */}
                 <Grid align="center">
                     <Link position="static" className={classes.link} to="/"><img alt="osmes" src={"images/logo.png"}className={classes.logoNew}/></Link>
                 </Grid>
@@ -121,19 +114,19 @@ export default function EditUserPage() {
                         <Grid item xs={12} >
                             <label >
                                 First Name
-                                <input type="text" id="firstName" name="firstName" defaultValue={auth.firstName} onLoad={handleLoad} onChange={handleChange} />
+                                <input type="text" id="firstName" name="firstName" defaultValue={auth.firstName} onMouseOver={handleLoad} onChange={handleChange} />
                             </label>
                         </Grid>
                         <Grid item xs={12} >
                             <label width="200%">
                                 Last Name
-                                <input type="text" id="lastName" name="lastName" defaultValue={auth.lastName} onLoad={handleLoad} onChange={handleChange} />
+                                <input type="text" id="lastName" name="lastName" defaultValue={auth.lastName} onMouseOver={handleLoad} onChange={handleChange} />
                             </label>
                         </Grid>
                         <Grid item xs={12} >
                             <label>
                                 Phone Number
-                                <input type="text" id="phone" name="phone" defaultValue={auth.phone} onLoad={handleLoad} onChange={handleChange} />
+                                <input type="text" id="phone" name="phone" defaultValue={auth.phone} onMouseOver={handleLoad} on onChange={handleChange} />
                             </label>
                         </Grid>
 

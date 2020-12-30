@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   album: {
     marginTop: theme.spacing(8),
+    textAlign: "center",
   },
 }));
 
@@ -140,6 +141,7 @@ export default function EditProductForm() {
               <Typography component="h1" variant="h5" gutterBottom>
                 Previous Product Images
               </Typography>
+              <Box height="15px" />
               <ReactAlbum
                 images={
                   oldProduct ? oldProduct.images.map((image) => image.url) : []

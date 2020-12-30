@@ -4,6 +4,7 @@ import {firestoreConnect} from 'react-redux-firebase'
 import {compose} from 'redux'
 
 import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -14,6 +15,12 @@ import Typography from '@material-ui/core/Typography';
 
 import ButtonAppBar from "../components/ButtonAppBar";
 import { CssBaseline } from '@material-ui/core';
+import ReactImages from "../components/Utils/ReactImages";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableRow from "@material-ui/core/TableRow";
 
 
 const useStyles = makeStyles({
@@ -34,9 +41,19 @@ const useStyles = makeStyles({
       },
   });
 
+  const BlueTextTypography = withStyles({
+    root: {
+      color: "#001eb3"
+    }
+  })(Typography);
+
 const  ProductDetails = (props) => {
     const classes = useStyles();
     const { product } = props;
+    var images = [];
+    product.images.forEach((image) => {
+      images.push({ source: image.url });
+    });
     if (product) {
         return (
           <React.Fragment>
@@ -45,16 +62,19 @@ const  ProductDetails = (props) => {
             <div className={classes.main}>
               <Card className={classes.root}>
                 <CardActionArea>
-                  <CardMedia
+                  {/* <CardMedia
                     className={classes.media}
                     image={product.images ? product.images[0].url : null}
                     title={product.name}
-                  />
+                  /> */}
+                  <div style={classes.images}>
+                    <ReactImages images={images} />
+                  </div>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <BlueTextTypography gutterBottom variant="h5" component="h2" align="center">
                       {product.name}
-                    </Typography>
-                    <Typography
+                    </BlueTextTypography>
+                    {/*<Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
@@ -66,14 +86,14 @@ const  ProductDetails = (props) => {
                       color="textSecondary"
                       component="p"
                     >
-                      {product.desc}
+                      Description: {product.desc}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
-                      RM {product.price}
+                      RM: {product.price}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -95,7 +115,61 @@ const  ProductDetails = (props) => {
                       component="p"
                     >
                       Ship from: {product.shipFrom}
-                    </Typography>
+                    </Typography> */}
+                    <TableContainer>
+                      <Table aria-label="simple table">
+                        <TableBody>
+                        <TableRow>
+                            <TableCell component="th" scope="row">
+                              Price (RM)
+                            </TableCell>
+                            <TableCell align="right">
+                              <b>{product.price}</b>
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell component="th" scope="row">
+                              Category
+                            </TableCell>
+                            <TableCell align="right">
+                              <b>{product.category}</b>
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell width="250px" component="th" scope="row">
+                              Stock
+                            </TableCell>
+                            <TableCell align="right">
+                              <b>{product.stock}</b>
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell component="th" scope="row">
+                              Brand
+                            </TableCell>
+                            <TableCell align="right">
+                              <b>{product.brand}</b>
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell component="th" scope="row">
+                              Ship From
+                            </TableCell>
+                            <TableCell align="right">
+                              <b>{product.shipFrom}</b>
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell component="th" scope="row">
+                              Seller
+                            </TableCell>
+                            <TableCell align="right">
+                              <b>{product.sellerName}</b>
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
                   </CardContent>
                 </CardActionArea>
                 <CardActions>

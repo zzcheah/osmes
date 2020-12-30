@@ -30,7 +30,7 @@ class ViewProduct extends React.Component {
   render() {
     //const {products} = this.props;
     let filteredProducts = this.props.products;
-    console.log(filteredProducts);
+    //console.log(filteredProducts);
 
     if (this.state.search === "") {
       return (
@@ -105,6 +105,7 @@ class ViewProduct extends React.Component {
             />
           </div>
           <div>
+          
             {/* <ProductList products = {products} /> */}
             <Container component="main">
               <div>
@@ -132,7 +133,7 @@ class ViewProduct extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  //console.log(state);
   return {
     products: state.firestore.ordered.products,
     filteredProducts: state.firestore.ordered.products,
