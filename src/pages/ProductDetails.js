@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonAppBar from "../components/ButtonAppBar";
 import { CssBaseline } from '@material-ui/core';
 import ReactImages from "../components/Utils/ReactImages";
+import ReactCarousel from "../components/Utils/ReactCarousel";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -50,10 +51,14 @@ const useStyles = makeStyles({
 const  ProductDetails = (props) => {
     const classes = useStyles();
     const { product } = props;
+    // var images = [];
+    // product.images.forEach((image) => {
+    //   images.push({ source: image.url });
+    // });
     var images = [];
-    product.images.forEach((image) => {
-      images.push({ source: image.url });
-    });
+  product.images.forEach((image) => {
+    images.push(image.url);
+  });
     if (product) {
         return (
           <React.Fragment>
@@ -68,7 +73,7 @@ const  ProductDetails = (props) => {
                     title={product.name}
                   /> */}
                   <div style={classes.images}>
-                    <ReactImages images={images} />
+                    <ReactCarousel images={images} />
                   </div>
                   <CardContent>
                     <BlueTextTypography gutterBottom variant="h5" component="h2" align="center">
