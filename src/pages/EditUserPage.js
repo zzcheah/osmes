@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
     height: "50px",
     padding: "5px",
     borderRadius: "5px",
-    borderWidth: "2px",
+    borderWidth: "1px",
     fontSize: "16px",
-    borderColor: "#00bfff"
+    borderColor: "#004cf0"
   },
 }));
 
