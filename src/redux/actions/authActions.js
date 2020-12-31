@@ -37,7 +37,7 @@ export const signupAction = (newUser, history) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
-    const { firstName, lastName, email, password, phone, gender } = newUser;
+    const { firstName, lastName, email, password, phone, gender, lastView } = newUser;
 
     firebase
       .auth()
@@ -48,6 +48,7 @@ export const signupAction = (newUser, history) => {
           lastName,
           phone,
           gender,
+          lastView,
         });
       })
       .then(() => {
@@ -64,9 +65,9 @@ export const editUserAction = (editUser, history) => {
   return (dispatch, getState, { getFirebase, getFirestore}) => {
     const firebase = getFirebase ();
     const firestore = getFirestore ();
-    const { firstName, lastName, phone } = editUser;
+    const { firstName, lastName, phone, gender, lastView } = editUser;
     const user = firebase.auth().currentUser;
-    console.log('User ID: ', editUser);
+    //console.log('User ID: ', editUser);
     
     firebase
       .auth()
@@ -76,10 +77,12 @@ export const editUserAction = (editUser, history) => {
             firstName,
             lastName,
             phone,
+            gender,
+            lastView,
           })
           .then(() => {
-            NotificationManager.success("Edit success");
-            history.push("/login");
+            NotificationManager.success("Edit profile successfully");
+            //history.push("/");
           })
           .catch((err) => {
             NotificationManager.error(err.message);
@@ -87,22 +90,39 @@ export const editUserAction = (editUser, history) => {
         } else {
           
         }
-      //});
-      //.updateCurrentUser()
-      // .then((resp) => {
-      //   return firestore.collection("users").doc(resp.user.uid).set({
-      //     firstName,
-      //     lastName,
-      //     phone,
-      //  });
-      // })
-      // .then(() => {
-      //   NotificationManager.success("Edit success");
-      //   history.push("/");
-      // })
-      // .catch((err) => {
-      //   NotificationManager.error(err.message);
-      // });
+    });
+  };
+};
+
+export const clickProductAction = (category, history) => {
+  return (dispatch, getState, { getFirebase, getFirestore}) => {
+    const firebase = getFirebase ();
+    const firestore = getFirestore ();
+    const { firstName, lastName, phone, gender, lastView } = category;
+    const user = firebase.auth().currentUser;
+    //console.log('LastView: ', category);
+    
+    firebase
+      .auth()
+      .onAuthStateChanged((resp) => {
+        if(resp){
+          return firestore.collection("users").doc(user.uid).set({
+            firstName,
+            lastName,
+            phone,
+            gender,
+            lastView,
+          })
+          .then(() => {
+            //NotificationManager.success("LAST VIEW");
+            //history.push("/login");
+          })
+          .catch((err) => {
+            NotificationManager.error(err.message);
+          });
+        } else {
+          
+        }
     });
   };
 };
