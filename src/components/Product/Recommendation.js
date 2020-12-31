@@ -72,7 +72,9 @@ export default function Recommendation() {
                 alignItems: "center",
                 }}
             >
-                <h2>Recommendations</h2>
+                <Typography component="h1" variant="h5" align="center">
+                        <h4>Recommendations</h4>
+                </Typography>
             </div>
             {/* <Container component="main"> */}
             <Grid item xs={12}>                    

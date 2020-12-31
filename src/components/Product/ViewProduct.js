@@ -42,9 +42,11 @@ class ViewProduct extends React.Component {
               alignItems: "center",
             }}
           >
-            <h2>View Products</h2>
+            <Typography component="h1" variant="h4" align="center">
+                        <h4>View Products</h4>
+              </Typography>
           </div>
-          <div style={{ paddingLeft: "150px" }}>
+          {/* <div style={{ paddingLeft: "150px" }}>
             <input
               style={{ width: "250px", paddingLeft: "80px" }}
               type="text"
@@ -52,7 +54,7 @@ class ViewProduct extends React.Component {
               value={this.state.search}
               onChange={this.updateSearch.bind(this)}
             />
-          </div>
+          </div> */}
           <div>
             {/* <ProductList products = {products} /> */}
             <Container component="main">
