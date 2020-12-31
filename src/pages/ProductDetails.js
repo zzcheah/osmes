@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {connect} from 'react-redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {compose} from 'redux'
@@ -12,6 +12,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory, useParams, Redirect, NavLink } from "react-router-dom";
+import { clickProductAction} from "../redux/actions/authActions"
 
 import ButtonAppBar from "../components/ButtonAppBar";
 import { CssBaseline } from '@material-ui/core';
@@ -48,18 +51,50 @@ const useStyles = makeStyles({
     }
   })(Typography);
 
+  
+
 const  ProductDetails = (props) => {
     const classes = useStyles();
     const { product } = props;
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => state.firebase.profile);
     // var images = [];
     // product.images.forEach((image) => {
     //   images.push({ source: image.url });
     // });
     var images = [];
-  product.images.forEach((image) => {
-    images.push(image.url);
+    product.images.forEach((image) => {
+      images.push(image.url);
+    });
+    //console.log("product",product.category)
+    //console.log("auth",auth)
+    const [category, setCategory] = useState({
+      firstName: "",
+      lastName: "",
+      phone: "",
+      gender: "",
+      lastView: "",
   });
+
+    const loadProduct = () => {
+      dispatch(clickProductAction(category, history));
+  };
+
+  useEffect(() => {
     if (product) {
+      setCategory({
+        firstName: auth.firstName,
+        lastName: auth.lastName,
+        phone: auth.phone,
+        gender: auth.gender,
+        lastView: product.category,
+      });
+    }
+  }, [product]);
+
+    if (product) {
+      loadProduct();
         return (
           <React.Fragment>
             <CssBaseline />
@@ -79,48 +114,6 @@ const  ProductDetails = (props) => {
                     <BlueTextTypography gutterBottom variant="h5" component="h2" align="center">
                       {product.name}
                     </BlueTextTypography>
-                    {/*<Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Brand: {product.brand}
-                    </Typography>
-                    <Typography
-                      variant="body3"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Description: {product.desc}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      RM: {product.price}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Stock: {product.stock}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Seller: {product.sellerName}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Ship from: {product.shipFrom}
-                    </Typography> */}
                     <TableContainer>
                       <Table aria-label="simple table">
                         <TableBody>
