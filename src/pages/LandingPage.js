@@ -5,6 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import ButtonAppBar from "../components/ButtonAppBar";
 import ViewProduct from "../components/Product/ViewProduct";
+import Recommendation from "../components/Product/Recommendation"
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -24,6 +25,7 @@ export default function LandingPage() {
         <ButtonAppBar />
         <Container component="main">
           <div className={classes.main}>
+            <Recommendation/>
             <ViewProduct/>
           </div>
         </Container>
