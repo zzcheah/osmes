@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
     borderWidth: "1px",
     fontSize: "16px",
-    borderColor: "#004cf0"
+    borderColor: "#003cbd"
   },
 }));
 
