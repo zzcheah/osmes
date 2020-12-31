@@ -79,6 +79,81 @@ export const addProduct = (product, images, history) => {
   };
 };
 
+export const editProduct = (id, product, currentImages, images, history) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    dispatch(toggleLoading());
+
+    const firestore = getFirestore();
+    const profile = getState().firebase.profile;
+    const userId = getState().firebase.auth.uid;
+    const storage = getFirebase().storage();
+
+    const updateDetail = firestore
+      .collection("products")
+      .doc(id)
+      .update({ ...product });
+
+    var imgArr = [];
+    currentImages.forEach((image) => {
+      if (!image.keep) {
+        storage.ref(image.path).delete();
+      } else {
+        delete image.keep;
+        imgArr.push(image);
+      }
+    });
+
+    const updateImgMetadata = firestore.collection("products").doc(id).update({
+      images: imgArr,
+    });
+
+    var promises = [];
+    promises.push(updateDetail);
+    promises.push(updateImgMetadata);
+
+    Promise.all(promises)
+      .then(() => {
+        if (images.length !== 0) {
+          images.forEach((image) => {
+            const filePath = `images/${id}/${image.name}`;
+            const uploadTask = storage.ref(filePath).put(image);
+
+            uploadTask.on(
+              "state_changed",
+              (snapshot) => {},
+              (error) => {
+                throw error;
+              },
+              () => {
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                  firestore
+                    .collection("products")
+                    .doc(id)
+                    .update({
+                      images: firestore.FieldValue.arrayUnion({
+                        name: image.name,
+                        url: downloadURL,
+                        path: filePath,
+                      }),
+                    });
+                });
+              }
+            );
+          });
+        }
+        NotificationManager.success("Successfully modified");
+        dispatch(toggleLoading());
+        history.push("/myproducts");
+      })
+      .catch((err) => {
+        console.log(err);
+        NotificationManager.error(err.message);
+        dispatch(toggleLoading());
+        history.push("/myproducts");
+      });
+  };
+};
+
 export const rateProduct = (product) => {
   return (dispatch, getState) => {
     const firestore = getFirestore();
