@@ -3,7 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CardActions from "@material-ui/core/CardActions";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
+import CardActionArea from "@material-ui/core/CardActionArea";
 import {
   Box,
   Container,
@@ -18,14 +21,14 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { DropzoneArea } from "material-ui-dropzone";
-import ReactAlbum from "../components/Utils/ReactAlbum";
+import { NotificationManager } from "react-notifications";
 import ButtonAppBar from "../components/ButtonAppBar";
 
 import { useHistory, useParams } from "react-router-dom";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useSelector, useDispatch } from "react-redux";
 
-import { addProduct } from "../redux/actions/productActions";
+import { editProduct } from "../redux/actions/productActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +57,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     textAlign: "center",
   },
+  card: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardMedia: {
+    paddingTop: "100%", // 16:9
+    // minHeight: "300px",
+    height: "100%",
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
 }));
 
 export default function EditProductForm() {
@@ -67,6 +82,7 @@ export default function EditProductForm() {
     desc: "",
   });
   const [images, setImages] = useState([]);
+  const [currentImages, setcurrentImages] = useState([]);
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -81,24 +97,6 @@ export default function EditProductForm() {
   const oldProduct = useSelector((state) => state.firestore.data.ep);
   const categories = useSelector((state) => state.firestore.ordered.categories);
 
-  const customCardActions = (index) => {
-    const handleDelete = () => {};
-    return (
-      <CardActions>
-        <Button
-          variant="outlined"
-          color="secondary"
-          style={{ marginLeft: "auto", marginRight: "5px" }}
-          startIcon={<DeleteIcon />}
-          size="small"
-          onClick={handleDelete(index)}
-        >
-          Remove
-        </Button>
-      </CardActions>
-    );
-  };
-
   useEffect(() => {
     if (oldProduct) {
       setProduct({
@@ -110,12 +108,35 @@ export default function EditProductForm() {
         shipFrom: oldProduct.shipFrom,
         desc: oldProduct.desc,
       });
+      var temp = [];
+      if (oldProduct.images) {
+        oldProduct.images.forEach((image) => {
+          temp.push({ ...image, keep: true });
+        });
+      }
+      setcurrentImages(temp);
     }
   }, [oldProduct]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addProduct(product, images, history));
+    var valid = true;
+    valid = images.length !== 0;
+
+    if (!valid) {
+      for (var i = 0; i < currentImages.length; i++) {
+        if (currentImages[i].keep) {
+          valid = true;
+          continue;
+        }
+      }
+    }
+
+    if (valid) {
+      dispatch(editProduct(id, product, currentImages, images, history));
+    } else {
+      NotificationManager.error("Please upload at least one product image");
+    }
   };
 
   const handleChange = (e) => {
@@ -129,12 +150,28 @@ export default function EditProductForm() {
     setImages(img);
   };
 
+  const handleDelete = (index) => {
+    console.log(`removed image ${index}`);
+    currentImages[index] = {
+      ...currentImages[index],
+      keep: false,
+    };
+    const newArray = currentImages.map((a) => ({ ...a }));
+    setcurrentImages(newArray);
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
       <ButtonAppBar />
       <Container component="main" maxWidth="md">
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
           {/* <Container component="main" maxWidth="sm"> */}
           <div className={classes.container}>
             <div className={classes.album}>
@@ -142,12 +179,54 @@ export default function EditProductForm() {
                 Previous Product Images
               </Typography>
               <Box height="15px" />
-              <ReactAlbum
+              <Grid justify="center" container spacing={1}>
+                {currentImages.map((card, index) =>
+                  card.keep ? (
+                    <Grid item key={index} xs={9} sm={6}>
+                      <Card className={classes.card}>
+                        <CardActionArea
+                          onClick={() => {
+                            console.log("asdasd");
+                          }}
+                        >
+                          <CardMedia
+                            className={classes.cardMedia}
+                            image={card.url}
+                            title="Image title"
+                          />
+                        </CardActionArea>
+                        <CardActions>
+                          <Button
+                            variant="outlined"
+                            color="secondary"
+                            style={{ marginLeft: "auto", marginRight: "5px" }}
+                            startIcon={<DeleteIcon />}
+                            size="small"
+                            onClick={() => {
+                              handleDelete(index);
+                            }}
+                          >
+                            Remove
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  ) : null
+                )}
+              </Grid>
+              {/* <ReactAlbum
                 images={
-                  oldProduct ? oldProduct.images.map((image) => image.url) : []
+                  currentImages
+                    ? currentImages.reduce(function (filtered, currentImage) {
+                        if (currentImage.keep) {
+                          filtered.push(currentImage.url);
+                        }
+                        return filtered;
+                      }, [])
+                    : []
                 }
                 cardActions={customCardActions}
-              />
+              /> */}
             </div>
           </div>
 
@@ -272,7 +351,7 @@ export default function EditProductForm() {
                       color="primary"
                       className={classes.submit}
                     >
-                      Add Product
+                      Apply
                     </Button>
                   </Grid>
                 </Grid>

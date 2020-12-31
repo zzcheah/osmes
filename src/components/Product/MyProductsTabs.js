@@ -13,11 +13,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-import ReactImages from "../Utils/ReactImages";
-
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
+
 import ReactCarousel from "../Utils/ReactCarousel";
 
 function TabPanel(props) {
@@ -92,8 +91,6 @@ export default function MyProductsTabs() {
     return <div>You do not have any products on sales</div>;
   }
 
-  console.log(myProducts);
-
   return (
     <div className={classes.root}>
       <Tabs
@@ -155,7 +152,7 @@ function MyProductDetail(product, history) {
         <Table aria-label="simple table">
           <TableBody>
             <TableRow>
-              <TableCell width="250px" component="th" scope="row">
+              <TableCell component="th" scope="row">
                 Stock
               </TableCell>
               <TableCell align="right">

@@ -12,7 +12,7 @@ import { themeColors } from "../styles/colors";
 import { Link } from "react-router-dom";
 import SignInLink from "./layout/SignInLink";
 import SignOutLink from "./layout/SignOutLink";
-import ViewProduct from "./Product/ViewProduct"
+import ViewProduct from "./Product/ViewProduct";
 import Container from "@material-ui/core/Container";
 import ProductSummary from "./Product/ProductSummary";
 
@@ -58,8 +58,10 @@ export default function ButtonAppBar() {
     "Paracetamol 50mg",
   ];
   const auth = useSelector((state) => state.firebase.auth);
-  const filteredProducts= useSelector((state) => state.firestore.ordered.products);
-  console.log("fil",filteredProducts);
+  const filteredProducts = useSelector(
+    (state) => state.firestore.ordered.products
+  );
+  // console.log("fil",filteredProducts);
   const history = useHistory();
 
   const updateSearch = (e) => {
@@ -69,10 +71,10 @@ export default function ButtonAppBar() {
   const getSearch = (e) => {
     e.preventDefault();
     console.log(search);
-    const x ="8MwcWMEEmd5nouWLt0kO";
-    let path = "searchProduct/"+search;
+    const x = "8MwcWMEEmd5nouWLt0kO";
+    let path = "searchProduct/" + search;
     //let path = "Product/"+x;
-    console.log("to push",path); 
+    console.log("to push", path);
     history.push(path);
 
     //setQuery(search);
@@ -94,7 +96,7 @@ export default function ButtonAppBar() {
     //                   );
     //                 })}
     //             </Grid>
-    //           </div> 
+    //           </div>
     //         </Container>
     //   </div>
     // );
@@ -138,7 +140,10 @@ export default function ButtonAppBar() {
                 // value={this.state.value}
                  //onChange={this.handleChange}
               /> */}
-              <form onSubmit={() => history.push("/searchProduct",{search})} className="App">
+              <form
+                onSubmit={() => history.push("/searchProduct", { search })}
+                className="App"
+              >
                 <input
                   className="search-bar"
                   type="text"
