@@ -82,7 +82,7 @@ export const editUserAction = (editUser, history) => {
           })
           .then(() => {
             NotificationManager.success("Edit profile successfully");
-            //history.push("/");
+            history.push("/");
           })
           .catch((err) => {
             NotificationManager.error(err.message);
