@@ -80,6 +80,8 @@ export default function EditUserPage() {
         firstName: "",
         lastName: "",
         phone: "",
+        gender: "",
+        lastView: "",
     });
 
     const auth = useSelector((state) => state.firebase.profile);
@@ -102,6 +104,8 @@ export default function EditUserPage() {
                 firstName: auth.firstName,
                 lastName: auth.lastName,
                 phone: auth.phone,
+                gender: auth.gender,
+                lastView: auth.lastView,
           });
         }
       }, [auth]);
