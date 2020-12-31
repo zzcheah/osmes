@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
       },
       root: {
         maxWidth: 400,
-        maxHeight: 400,
+        maxHeight: 430,
         width: 250,
-        height:400,
+        height:430,
       },
   }));
 
@@ -55,16 +55,20 @@ const ProductSummary = ({products}) => {
                             title= {products.name}
                             />
                                 <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2" align="center">
-                                        {products.name}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="p"
-                                        >
-                                        {products.desc}    
-                                    </Typography>
+                                    <div style={{height:"70px"}}>
+                                        <Typography gutterBottom variant="h5" component="h2" align="center">
+                                            {products.name}
+                                        </Typography>
+                                    </div>
+                                    <div style={{height:"65px"}}>
+                                        <Typography
+                                            variant="body2"
+                                            color="textSecondary"
+                                            component="p"
+                                            >
+                                            {products.desc}    
+                                        </Typography>
+                                    </div>
                                     <Typography
                                         variant="body2"
                                         color="textSecondary"
