@@ -59,7 +59,7 @@ const RecommendProductSummary = ({products}) => {
                             />
                                 <CardContent>
                                     <div style={{height:"90px", align:"center"}}>
-                                        <Typography gutterBottom variant="h5" component="h2" align="center" style={{fontSize:"20px"}}>
+                                        <Typography gutterBottom variant="h5" component="h2" align="center" style={{fontSize:"18px"}}>
                                             {products.name}
                                         </Typography>
                                     </div>

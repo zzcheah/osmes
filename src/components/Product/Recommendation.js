@@ -43,29 +43,26 @@ export default function Recommendation() {
     const classes = useStyles();
     const auth = useSelector((state) => state.firebase.profile);
     const lastView = auth.lastView;
-    console.log("lastView",lastView)
+    //console.log("auth",auth)
+    //console.log("lastView",lastView)
 
     useFirestoreConnect([
         {
           collection: "products",
           where: [["category", "==", lastView]],
+          //orderBy: ('name','desc'),
+          orderBy: "brand",
           storeAs: "recommendProducts",
           limit: "3"
-        },
-        {
-            collection: "products",
-            where: [["category", "==", y]],
-            storeAs: "recommendProducts2",
-            limit: "3"
         },
     ]);
 
     const recommendProducts = useSelector((state) => state.firestore.ordered.recommendProducts);
-    // const recommendProducts2 = useSelector((state) => state.firestore.ordered.recommendProducts2);
+    console.log("recommendProducts",recommendProducts)
 
-    return (
-        <div>
-            <div
+    if (isEmpty(auth)) {
+        return (
+            <div    
                 style={{
                 display: "flex",
                 justifyContent: "center",
@@ -73,39 +70,59 @@ export default function Recommendation() {
                 }}
             >
                 <Typography component="h1" variant="h5" align="center">
-                        <h4>Recommendations</h4>
-                </Typography>
+                    <h4>Recommendations</h4>
+                    <h5>Loading...</h5>
+                </Typography>            
             </div>
-            {/* <Container component="main"> */}
+        ); ;
+      }
+
+    if (!isLoaded(recommendProducts)) {
+        return (
+            <div    
+                style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                }}
+            >
+                <Typography component="h1" variant="h5" align="center">
+                    <h4>Recommendations</h4>
+                    <h5>Loading...</h5>
+                </Typography>            
+            </div>
+        ); 
+      }
+
+    return (
+        <div>
+            <div    
+                style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                }}
+            >
+                <Typography component="h1" variant="h5" align="center">
+                    <h4>Recommendations</h4>
+                </Typography>            
+            </div>
             <Grid item xs={12}>                    
-                    <Grid container justify="center" spacing={0}>
-                        {recommendProducts &&
-                            recommendProducts.map((products) => {
-                                return (
-                                    <Link key={products.id} to={"/product/" + products.id} style={{ textDecoration: 'none' }}>
+                <Grid container justify="center" spacing={0}>
+                    {recommendProducts &&
+                        recommendProducts.map((products) => {
+                            return (
+                                <Link key={products.id} to={"/product/" + products.id} style={{ textDecoration: 'none' }}>
                                     <RecommendProductSummary
                                         products={products}
                                         key={products.id}
                                     />
-                                    </Link>
-                                );
-                            })
-                        }
-                        {/* {recommendProducts2 &&
-                            recommendProducts2.map((products) => {
-                                return (
-                                    <Link key={products.id} to={"/product/" + products.id} style={{ textDecoration: 'none' }}>
-                                    <RecommendProductSummary
-                                        products={products}
-                                        key={products.id}
-                                    />
-                                    </Link>
-                                );
-                            })
-                        } */}
-                    </Grid>
-                </Grid>
-            {/* </Container> */}
-      </div>
-    );
+                                </Link>
+                            );
+                        })
+                    }
+                </Grid>                
+            </Grid>                                
+        </div>
+    );    
 }
