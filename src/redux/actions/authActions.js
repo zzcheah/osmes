@@ -37,7 +37,7 @@ export const signupAction = (newUser, history) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
-    const { firstName, lastName, email, password, phone, gender, lastView } = newUser;
+    const { firstName, lastName, email, password, phone, gender, lastView, lastSecondView } = newUser;
 
     firebase
       .auth()
@@ -49,6 +49,7 @@ export const signupAction = (newUser, history) => {
           phone,
           gender,
           lastView,
+          lastSecondView,
         });
       })
       .then(() => {
@@ -65,7 +66,7 @@ export const editUserAction = (editUser, history) => {
   return (dispatch, getState, { getFirebase, getFirestore}) => {
     const firebase = getFirebase ();
     const firestore = getFirestore ();
-    const { firstName, lastName, phone, gender, lastView } = editUser;
+    const { firstName, lastName, phone, gender, lastView, lastSecondView } = editUser;
     const user = firebase.auth().currentUser;
     //console.log('User ID: ', editUser);
     
@@ -79,6 +80,7 @@ export const editUserAction = (editUser, history) => {
             phone,
             gender,
             lastView,
+            lastSecondView,
           })
           .then(() => {
             NotificationManager.success("Edit profile successfully");
@@ -98,7 +100,7 @@ export const clickProductAction = (category, history) => {
   return (dispatch, getState, { getFirebase, getFirestore}) => {
     const firebase = getFirebase ();
     const firestore = getFirestore ();
-    const { firstName, lastName, phone, gender, lastView } = category;
+    const { firstName, lastName, phone, gender, lastView, lastSecondView } = category;
     const user = firebase.auth().currentUser;
     //console.log('LastView: ', category);
     
@@ -112,6 +114,7 @@ export const clickProductAction = (category, history) => {
             phone,
             gender,
             lastView,
+            lastSecondView,
           })
           .then(() => {
             //NotificationManager.success("LAST VIEW");
