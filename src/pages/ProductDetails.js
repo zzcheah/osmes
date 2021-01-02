@@ -59,10 +59,10 @@ const  ProductDetails = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.firebase.profile);
-    // var images = [];
-    // product.images.forEach((image) => {
-    //   images.push({ source: image.url });
-    // });
+    //console.log("lastView",auth.lastView);
+    //console.log("lastSecondView",auth.lastSecondView);
+
+
     var images = [];
     product.images.forEach((image) => {
       images.push(image.url);
@@ -75,6 +75,7 @@ const  ProductDetails = (props) => {
       phone: "",
       gender: "",
       lastView: "",
+      lastSecondView: "",
   });
 
     const loadProduct = () => {
@@ -83,13 +84,27 @@ const  ProductDetails = (props) => {
 
   useEffect(() => {
     if (product) {
-      setCategory({
-        firstName: auth.firstName,
-        lastName: auth.lastName,
-        phone: auth.phone,
-        gender: auth.gender,
-        lastView: product.category,
-      });
+      if(auth.lastView==product.category){
+        console.log("its the same")
+        setCategory({
+          firstName: auth.firstName,
+          lastName: auth.lastName,
+          phone: auth.phone,
+          gender: auth.gender,
+          lastSecondView: auth.lastSecondView,
+          lastView: auth.lastView,
+        });
+      }else{
+          console.log("its not the same")
+          setCategory({
+            firstName: auth.firstName,
+            lastName: auth.lastName,
+            phone: auth.phone,
+            gender: auth.gender,
+            lastSecondView: auth.lastView,
+            lastView: product.category,
+          });
+        }
     }
   }, [product]);
 
