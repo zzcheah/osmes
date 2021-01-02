@@ -15,6 +15,7 @@ import SignOutLink from "./layout/SignOutLink";
 import ViewProduct from "./Product/ViewProduct";
 import Container from "@material-ui/core/Container";
 import ProductSummary from "./Product/ProductSummary";
+import Trending from "./Product/Trending"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(7)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
@@ -135,13 +136,14 @@ export default function ButtonAppBar() {
           {/* //press ther image then will navigate to homepage */}
           {/* <img src={"images/logo.png"} alt="tms" className={classes.logo} /> */}
           <Grid container spacing={1} style={{ margin: "0px 0px 0px 30px" }}>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               {trending.map((str, i) => (
                 <div key={i} style={{ display: "inline", marginRight: "30px" }}>
                   {str}
                 </div>
               ))}
-            </Grid>
+            </Grid> */}
+                <Trending/>
             <Grid item xs={12}>
               {/* <SearchBar
                 type = "text"
@@ -163,7 +165,7 @@ export default function ButtonAppBar() {
                   placeholder="Product Name"
                   value={search}
                   onChange={updateSearch}
-                 style={{width:"200px"}}
+                 style={{width:"240px"}}
                 ></input>
               </form>
             </Grid>
