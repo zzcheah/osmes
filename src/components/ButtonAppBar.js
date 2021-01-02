@@ -46,6 +46,17 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     height: "110%",
   },
+  
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
 }));
 
 export default function ButtonAppBar() {
@@ -145,16 +156,18 @@ export default function ButtonAppBar() {
                 className="App"
               >
                 <input
-                  className="search-bar"
+                  className={
+                    classes.inputInput
+                  }
                   type="text"
                   placeholder="Product Name"
                   value={search}
                   onChange={updateSearch}
+                 style={{width:"200px"}}
                 ></input>
               </form>
             </Grid>
           </Grid>
-
           {isLoaded(auth) && !isEmpty(auth) ? <SignInLink /> : <SignOutLink />}
         </Toolbar>
       </AppBar>
