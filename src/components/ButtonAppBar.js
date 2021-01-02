@@ -165,7 +165,7 @@ export default function ButtonAppBar() {
                   placeholder="Product Name"
                   value={search}
                   onChange={updateSearch}
-                 style={{width:"240px"}}
+                 style={{width:"240px", borderRadius:"3px", borderWidth:"0px"}}
                 ></input>
               </form>
             </Grid>

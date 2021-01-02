@@ -100,7 +100,7 @@ export default function Trending() {
                     {trendingProducts &&
                         trendingProducts.map((products) => {
                             return (
-                                <div style={{display: "inline", marginRight:"30px", marginBottom:"8px"}}> 
+                                <div style={{display: "inline", marginRight:"30px", marginBottom:"10px"}}> 
                                     <Link key={products.id} to={"/product/" + products.id} 
                                     style={{ textDecoration: 'none', color:'#FFFFFF', fontSize:'15px' }}>
                                         {products.name}
@@ -112,7 +112,7 @@ export default function Trending() {
                     {trendingProducts2 &&
                         trendingProducts2.map((products) => {
                             return (
-                                <div style={{display: "inline", marginRight:"30px", marginBottom:"8px"}}>
+                                <div style={{display: "inline", marginRight:"30px", marginBottom:"10px"}}>
                                     <Link key={products.id} to={"/product/" + products.id} 
                                     style={{ textDecoration: 'none', color:'#FFFFFF', fontSize:'15px' }}>
                                         {products.name}
