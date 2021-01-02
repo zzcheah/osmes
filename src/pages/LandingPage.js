@@ -31,7 +31,6 @@ export default function LandingPage() {
           <div className={classes.main}>
             {/* <Recommendation/> */}
             <ViewProduct/>
-            Please Log In
           </div>
         </Container>
       </React.Fragment>
