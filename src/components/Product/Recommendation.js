@@ -1,18 +1,17 @@
-import { Divider } from "@material-ui/core";
 //import React, {useEffect, useState} from 'react'
-import React, { Component } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ProductList from "./ProductList";
+//import ProductList from "./ProductList";
 import RecommendProductSummary from "./RecommendProductSummary";
-import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
-import { compose } from "redux";
-import SearchBar from "../SearchBar";
+//import { connect } from "react-redux";
+//import { firestoreConnect } from "react-redux-firebase";
+//import { compose } from "redux";
+//import SearchBar from "../SearchBar";
 //import firebase from "./configs/firebaseConfig";
-import firebase from "../../configs/firebaseConfig";
+//import firebase from "../../configs/firebaseConfig";
 import { Link } from "react-router-dom";
-import { Card, CardContent, Grid, Typography } from "@material-ui/core";
-import Container from "@material-ui/core/Container";
+import { Grid, Typography } from "@material-ui/core";
+//import Container from "@material-ui/core/Container";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
 
@@ -38,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
   
 export default function Recommendation() {
 
-    const x = "Thermometer"
-    const y = "Medicine"
     const classes = useStyles();
     const auth = useSelector((state) => state.firebase.profile);
     const lastView = auth.lastView;
@@ -114,8 +111,8 @@ export default function Recommendation() {
                 alignItems: "center",
                 }}
             >
-                <Typography component="h1" variant="h5" align="center">
-                    <h4>Recommendations</h4>
+                <Typography component="h3" variant="h4" align="center" style={{fontSize:"25px", margin:"15px"}}>
+                    <b>Recommendations</b>
                 </Typography>            
             </div>
             <Grid item xs={12}>                    
