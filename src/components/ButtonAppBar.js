@@ -73,50 +73,12 @@ export default function ButtonAppBar() {
   const filteredProducts = useSelector(
     (state) => state.firestore.ordered.products
   );
-  // console.log("fil",filteredProducts);
   const history = useHistory();
 
   const updateSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  const getSearch = (e) => {
-    e.preventDefault();
-    console.log(search);
-    const x = "8MwcWMEEmd5nouWLt0kO";
-    let path = "searchProduct/" + search;
-    //let path = "Product/"+x;
-    console.log("to push", path);
-    history.push(path);
-
-    //setQuery(search);
-    // return (
-    //   <div>
-    //     helloooooooooooooooooooooooo
-    //     <Container component="main">
-    //            <div>
-    //             <Grid container spacing={2} justify="center">
-    //               {filteredProducts &&
-    //                 filteredProducts.map((products) => {
-    //                   return (
-    //                     <Link to={"/product/" + products.id}>
-    //                       <ProductSummary
-    //                         products={products}
-    //                         key={products.id}
-    //                       />
-    //                     </Link>
-    //                   );
-    //                 })}
-    //             </Grid>
-    //           </div>
-    //         </Container>
-    //   </div>
-    // );
-  };
-
-  // handleChange = (e) =>{
-  //   console.log(e)
-  // }
   var logoURL = "images/logo.png";
 
   if (history.location.pathname !== "/") {

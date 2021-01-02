@@ -21,9 +21,19 @@ import ButtonAppBar from "../ButtonAppBar";
 
 export default ({history,location}) => {
 
-  var searchQuery = JSON.stringify(location.state);
-  console.log("searchQuery", searchQuery);
-  var query = searchQuery.substring(11, searchQuery.length - 2);
+  // if(location.state){
+  //   console.log("location", location.state);
+  //   var searchQuery = JSON.stringify(location.state);
+  //   console.log("searchQuery", searchQuery);
+  //   var query = searchQuery.substring(11, searchQuery.length - 2);
+  // }else{
+  //   var query = "su";
+  // }
+
+    console.log("location", location.state);
+    var searchQuery = JSON.stringify(location.state);
+    console.log("searchQuery", searchQuery);
+    var query = searchQuery.substring(11, searchQuery.length - 2);
 
 
    // const filteredProducts = products.filter(products => {
