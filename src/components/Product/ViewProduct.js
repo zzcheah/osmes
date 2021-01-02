@@ -57,8 +57,8 @@ class ViewProduct extends React.Component {
             }}
           >
             <Typography component="h1" variant="h4" align="center">
-                        <h4>View Products</h4>
-              </Typography>
+              <h4>View Products</h4>
+            </Typography>
           </div>
           <div style={{ paddingLeft: "65px" }}>
             {/* <input
@@ -130,7 +130,9 @@ class ViewProduct extends React.Component {
               alignItems: "center",
             }}
           >
-            <h2>View Products</h2>
+            <Typography component="h1" variant="h4" align="center">
+              <h4>View Products</h4>
+            </Typography>
           </div>
           <div style={{ paddingLeft: "65px" }}>
             {/* <input
