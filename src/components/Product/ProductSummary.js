@@ -57,7 +57,7 @@ const ProductSummary = ({products}) => {
                                 <CardContent>
                                     <div style={{height:"70px"}}>
                                         <Typography gutterBottom variant="h5" component="h2" align="center">
-                                            {products.name}
+                                            {products.name.slice(0, 35)}
                                         </Typography>
                                     </div>
                                     <div style={{height:"65px"}}>
@@ -66,7 +66,7 @@ const ProductSummary = ({products}) => {
                                             color="textSecondary"
                                             component="p"
                                             >
-                                            {products.desc}    
+                                            {products.desc.slice(0, 87)   } 
                                         </Typography>
                                     </div>
                                     <Typography
