@@ -30,7 +30,7 @@ export default function LandingPage() {
         <Container component="main">
           <div className={classes.main}>
             {/* <Recommendation/> */}
-            {/* <ViewProduct/> */}
+            <ViewProduct/>
             Please Log In
           </div>
         </Container>
