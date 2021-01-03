@@ -12,25 +12,25 @@ import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+        flexGrow: 1,
     },
     tabs: {
-      padding: "30px 0px",
-      flexGrow: 1,
-      borderRight: `1px solid ${theme.palette.divider}`,
-      maxWidth: "250px",
+        padding: "30px 0px",
+        flexGrow: 1,
+        borderRight: `1px solid ${theme.palette.divider}`,
+        maxWidth: "250px",
     },
     paper: {
         height: 140,
         width: 100,
-      },
-      control: {
+    },
+    control: {
         padding: theme.spacing(2),
-      },
+    },
     trending: {
         color:"000000",
-      },
-  }));
+    },
+}));
   
 export default function Trending() {
 
@@ -43,7 +43,6 @@ export default function Trending() {
         {
             collection: "products",
             where: [["category", "==", "Face Masks"]],
-            //orderBy: ('name','desc'),
             orderBy: "brand",
             storeAs: "trendingProducts",
             limit: "2"
@@ -51,7 +50,6 @@ export default function Trending() {
         {
             collection: "products",
             where: [["category", "==", "Thermometer"]],
-            //orderBy: ('name','desc'),
             orderBy: "brand",
             storeAs: "trendingProducts2",
             limit: "1"
@@ -60,38 +58,6 @@ export default function Trending() {
 
     const trendingProducts = useSelector((state) => state.firestore.ordered.trendingProducts);
     const trendingProducts2 = useSelector((state) => state.firestore.ordered.trendingProducts2);
-
-    // if (isEmpty(auth)) {
-    //     return (
-    //         <div    
-    //             style={{
-    //             display: "flex",
-    //             justifyContent: "center",
-    //             alignItems: "center",
-    //             }}
-    //         >
-    //             <Typography component="h1" variant="h5" align="center">
-    //                 <h5>Loading...</h5>
-    //             </Typography>            
-    //         </div>
-    //     ); ;
-    //   }
-
-    // if (!isLoaded(trendingProducts)) {
-    //     return (
-    //         <div    
-    //             style={{
-    //             display: "flex",
-    //             justifyContent: "center",
-    //             alignItems: "center",
-    //             }}
-    //         >
-    //             <Typography component="h1" variant="h5" align="center">
-    //                 <h5>Loading...</h5>
-    //             </Typography>            
-    //         </div>
-    //     ); 
-    //   }
 
     return (
         <div>
@@ -102,7 +68,8 @@ export default function Trending() {
                             return (
                                 <div style={{display: "inline", marginRight:"30px", marginBottom:"10px"}}> 
                                     <Link key={products.id} to={"/product/" + products.id} 
-                                    style={{ textDecoration: 'none', color:'#FFFFFF', fontSize:'15px' }}>
+                                        style={{ textDecoration: 'none', color:'#FFFFFF', fontSize:'15px' }}
+                                        >
                                         {products.name}
                                     </Link>
                                 </div>
@@ -114,7 +81,8 @@ export default function Trending() {
                             return (
                                 <div style={{display: "inline", marginRight:"30px", marginBottom:"10px"}}>
                                     <Link key={products.id} to={"/product/" + products.id} 
-                                    style={{ textDecoration: 'none', color:'#FFFFFF', fontSize:'15px' }}>
+                                        style={{ textDecoration: 'none', color:'#FFFFFF', fontSize:'15px' }}
+                                        >
                                         {products.name}
                                     </Link>
                                 </div>

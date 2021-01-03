@@ -13,37 +13,35 @@ import TableRow from "@material-ui/core/TableRow";
 import { Height } from '@material-ui/icons';
 
 
-
 const useStyles = makeStyles((theme) => ({
     main: {
-      paddingTop: "20px",
-      flexDirection: "column",
-      alignItems: "center",
+        paddingTop: "20px",
+        flexDirection: "column",
+        alignItems: "center",
     },
     media: {
         paddingRight: '100%',
         width: 10,
         height: 10,
         paddingTop: '100%',
-      },
+    },
       root: {
         maxWidth: 360,
         maxHeight: 700,
         width: 155,
         height: 290
-      },
-  }));
+    },
+}));
 
-  const BlueTextTypography = withStyles({
+const BlueTextTypography = withStyles({
     root: {
-      color: "#001eb3"
+        color: "#001eb3"
     }
-  })(Typography);
+})(Typography);
 
 
 const RecommendProductSummary = ({products}) => {
     const classes = useStyles();
-    //console.log(products);
     return (
         <React.Fragment>
             <CssBaseline />
@@ -52,11 +50,11 @@ const RecommendProductSummary = ({products}) => {
                     <Grid container spacing={1}>
                         <Grid item xs={1} key={products.id}>
                             <Card  className={classes.root}>
-                            <CardMedia
-                            className={classes.media}
-                            image= {products.images?products.images[0].url:null}
-                            title= {products.name}
-                            />
+                                <CardMedia
+                                className={classes.media}
+                                image= {products.images?products.images[0].url:null}
+                                title= {products.name}
+                                />
                                 <CardContent>
                                     <div style={{height:"90px", align:"center"}}>
                                         <Typography gutterBottom variant="h5" component="h2" align="center" style={{fontSize:"20px"}}>
@@ -67,7 +65,7 @@ const RecommendProductSummary = ({products}) => {
                                         variant="body2"
                                         color="textSecondary"
                                         component="p"
-                                        >
+                                    >
                                         <b>RM: {products.price} </b>
                                     </Typography>
                                 </CardContent>

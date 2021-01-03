@@ -36,17 +36,12 @@ class ViewProduct extends React.Component {
     }else{
       this.setState({ search: event.target.value });
     }
-    //console.log({search: event.target.value})
   }
 
   render() {
-    //const {products} = this.props;
     let filteredProducts = this.props.products;
     let productscategory = this.props.category;
-    //console.log("productscategory",productscategory);
-    //console.log("search",this.state.search)
     if (this.state.search === "") {
-         
       return (
         <div>
           <div
@@ -78,23 +73,22 @@ class ViewProduct extends React.Component {
                   onChange={this.updateSearch.bind(this)
                     //setProduct({ ...product, category: e.target.value });
                   }
-                >
-                {productscategory &&
-                  productscategory.map((category, index) => (
-                    <MenuItem key={index} value={category.name}>
-                      {category.name}
-                    </MenuItem>
-                  ))}
+                  >
+                  {productscategory &&
+                    productscategory.map((category, index) => (
+                      <MenuItem key={index} value={category.name}>
+                        {category.name}
+                      </MenuItem>
+                    ))
+                  }
                 </Select>
               </FormControl>
             </Grid>
           </div>
           <div>
-            {/* <ProductList products = {products} /> */}
             <Container component="main">
               <div>
                 <Grid container spacing={2} justify="center">
-                  {/* {products && products.map(products => { */}
                   {filteredProducts &&
                     filteredProducts.map((products) => {
                       return (
@@ -105,7 +99,8 @@ class ViewProduct extends React.Component {
                           />
                         </Link>
                       );
-                    })}
+                    })
+                  }
                 </Grid>
               </div>
             </Container>
@@ -129,7 +124,7 @@ class ViewProduct extends React.Component {
               justifyContent: "center",
               alignItems: "center",
             }}
-          >
+            >
             <Typography component="h1" variant="h4" align="center">
               <h4>View Products</h4>
             </Typography>
@@ -152,23 +147,22 @@ class ViewProduct extends React.Component {
                   onChange={this.updateSearch.bind(this)
                     //setProduct({ ...product, category: e.target.value });
                   }
-                >
-                {productscategory &&
-                  productscategory.map((category, index) => (
-                    <MenuItem key={index} value={category.name}>
-                      {category.name}
-                    </MenuItem>
-                  ))}
+                  >
+                  {productscategory &&
+                    productscategory.map((category, index) => (
+                      <MenuItem key={index} value={category.name}>
+                        {category.name}
+                      </MenuItem>
+                    ))
+                  }
                 </Select>
               </FormControl>
             </Grid>  
           </div>
           <div>
-            {/* <ProductList products = {products} /> */}
             <Container component="main">
               <div>
                 <Grid container spacing={2} justify="center">
-                  {/* {products && products.map(products => { */}
                   {filteredProducts &&
                     filteredProducts.map((products) => {
                       return (
@@ -179,7 +173,8 @@ class ViewProduct extends React.Component {
                           />
                         </Link>
                       );
-                    })}
+                    })
+                  }
                 </Grid>
               </div>
             </Container>
@@ -191,7 +186,6 @@ class ViewProduct extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  //console.log(state);
   return {
     products: state.firestore.ordered.products,
     filteredProducts: state.firestore.ordered.products,

@@ -21,7 +21,7 @@ class ViewProduct extends React.Component {
     constructor() {
         super();
         this.state = {
-        search: "",
+            search: "",
         };
     }
 
@@ -31,19 +31,18 @@ class ViewProduct extends React.Component {
 
     render() {
         const x = this.props.keyword;
-
         if (this.state.search === "") {
             this.state.search = x;
         }
 
-    console.log("search query",this.state.search)
-    let filteredProducts = this.props.products.filter((products) => {
-        return (
-            products.name
-            .toLowerCase()
-            .indexOf(this.state.search.toLowerCase()) !== -1
-        );
-    });
+        //console.log("search query",this.state.search)
+        let filteredProducts = this.props.products.filter((products) => {
+            return (
+                products.name
+                .toLowerCase()
+                .indexOf(this.state.search.toLowerCase()) !== -1
+            );
+        });
 
         return (
             <div>
@@ -53,9 +52,7 @@ class ViewProduct extends React.Component {
                         alt="osmes"
                         src={"images/logo.png"}
                         style={{width:"50%", height:"50%", display: "block", padding: "20px 50px 10px 50px"}}
-                        //className={classes.logoNew}
                         />
-                            
                     </NavLink> 
                 </Grid>
                 <div
@@ -64,45 +61,27 @@ class ViewProduct extends React.Component {
                     justifyContent: "center",
                     alignItems: "center",
                     }}
-                >
+                    >
                     <h2>Search Results</h2>
                 </div>
-                {/* <div style={{ paddingLeft: "150px" }}>
-                    <input
-                    style={{ width: "250px", paddingLeft: "80px" }}
-                    type="text"
-                    placeholder="Product Name"
-                    value={this.state.search}
-                    onChange={this.updateSearch.bind(this)}
-                    />
-                    <input
-                    style={{ width: "250px", paddingLeft: "80px" }}
-                    type="text"
-                    placeholder="Product Name"
-                    value={this.props.keyword}
-                    onMouseOverCapture={this.updateSearch.bind(this)}
-                    onChange={this.updateSearch.bind(this)}
-                    />
-                </div> */}
                 <div>
-                    {/* <ProductList products = {products} /> */}
                     <Container component="main">
-                    <div>
-                        <Grid container spacing={2} justify="center">
-                        {/* {products && products.map(products => { */}
-                        {filteredProducts &&
-                            filteredProducts.map((products) => {
-                            return (
-                                <Link to={"/product/" + products.id} style={{ textDecoration: 'none' }}>
-                                <ProductSummary
-                                    products={products}
-                                    key={products.id}
-                                />
-                                </Link>
-                            );
-                            })}
-                        </Grid>
-                    </div>
+                        <div>
+                            <Grid container spacing={2} justify="center">
+                                {filteredProducts &&
+                                    filteredProducts.map((products) => {
+                                        return (
+                                            <Link to={"/product/" + products.id} style={{ textDecoration: 'none' }}>
+                                                <ProductSummary
+                                                    products={products}
+                                                    key={products.id}
+                                                />
+                                            </Link>
+                                        );
+                                    }
+                                )}
+                            </Grid>
+                        </div>
                     </Container>
                 </div>
             </div>

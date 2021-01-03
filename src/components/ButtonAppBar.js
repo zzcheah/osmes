@@ -27,10 +27,6 @@ const useStyles = makeStyles((theme) => ({
     height: "130px",
   },
   logo: {
-    // display: "none",
-    // [theme.breakpoints.up("sm")]: {
-    //   display: "block"
-    // }
     display: "block",
     width: "auto",
     height: "80%",
@@ -50,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
   
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(7)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',

@@ -14,13 +14,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-
 }));
 
 export default function LandingPage() {
   const classes = useStyles();
   const auth = useSelector((state) => state.firebase.profile);
-  //console.log("auth status", auth)
 
   if(isEmpty(auth)){
     return (
@@ -50,7 +48,5 @@ export default function LandingPage() {
         </Container>
       </React.Fragment>
     );
-  }
-    
-  
+  } 
 }

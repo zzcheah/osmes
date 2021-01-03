@@ -28,64 +28,55 @@ import TableRow from "@material-ui/core/TableRow";
 
 
 const useStyles = makeStyles({
-    root: {
-      maxWidth: 400,
-    },
-    media: {
-      //height: 240,
-      height: 50,
-      paddingTop: '100%', 
-    },
-    main: {
-        paddingTop: "20px",
-        flexDirection: "column",
-        alignItems: "center",
-        paddingLeft: "35%",
-        paddingBottom: "20px",
-      },
-  });
+  root: {
+    maxWidth: 400,
+  },
+  media: {
+    height: 50,
+    paddingTop: '100%', 
+  },
+  main: {
+      paddingTop: "20px",
+      flexDirection: "column",
+      alignItems: "center",
+      paddingLeft: "35%",
+      paddingBottom: "20px",
+  },
+});
 
-  const BlueTextTypography = withStyles({
-    root: {
-      color: "#001eb3"
-    }
-  })(Typography);
-
-  
-
+const BlueTextTypography = withStyles({
+  root: {
+    color: "#001eb3"
+  }
+})(Typography);
+ 
 const  ProductDetails = (props) => {
-    const classes = useStyles();
-    const { product } = props;
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const auth = useSelector((state) => state.firebase.profile);
-    //console.log("lastView",auth.lastView);
-    //console.log("lastSecondView",auth.lastSecondView);
+  const classes = useStyles();
+  const { product } = props;
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.firebase.profile);
 
-
-    var images = [];
-    product.images.forEach((image) => {
-      images.push(image.url);
-    });
-    //console.log("product",product.category)
-    //console.log("auth",auth)
-    const [category, setCategory] = useState({
-      firstName: "",
-      lastName: "",
-      phone: "",
-      gender: "",
-      lastView: "",
-      lastSecondView: "",
+  var images = [];
+  product.images.forEach((image) => {
+    images.push(image.url);
   });
+  const [category, setCategory] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    gender: "",
+    lastView: "",
+    lastSecondView: "",
+});
 
-    const loadProduct = () => {
-      dispatch(clickProductAction(category, history));
+  const loadProduct = () => {
+    dispatch(clickProductAction(category, history));
   };
 
   useEffect(() => {
     if (product) {
       if(auth.lastView==product.category){
-        console.log("its the same")
         setCategory({
           firstName: auth.firstName,
           lastName: auth.lastName,
@@ -94,8 +85,7 @@ const  ProductDetails = (props) => {
           lastSecondView: auth.lastSecondView,
           lastView: auth.lastView,
         });
-      }else{
-          console.log("its not the same")
+      } else{
           setCategory({
             firstName: auth.firstName,
             lastName: auth.lastName,
@@ -108,119 +98,112 @@ const  ProductDetails = (props) => {
     }
   }, [product]);
 
-    if (product) {
-      loadProduct();
-        return (
-          <React.Fragment>
-            <CssBaseline />
-            <ButtonAppBar />
-            <div className={classes.main}>
-              <Card className={classes.root}>
-                <CardActionArea>
-                  {/* <CardMedia
-                    className={classes.media}
-                    image={product.images ? product.images[0].url : null}
-                    title={product.name}
-                  /> */}
-                  <div style={classes.images}>
-                    <ReactCarousel images={images} />
-                  </div>
-                  <CardContent>
-                    <BlueTextTypography gutterBottom variant="h5" component="h2" align="center">
-                      {product.name}
-                    </BlueTextTypography>
-                    <TableContainer>
-                      <Table aria-label="simple table">
-                        <TableBody>
+  if (product) {
+    loadProduct();
+      return (
+        <React.Fragment>
+          <CssBaseline />
+          <ButtonAppBar />
+          <div className={classes.main}>
+            <Card className={classes.root}>
+              <CardActionArea>
+                <div style={classes.images}>
+                  <ReactCarousel images={images} />
+                </div>
+                <CardContent>
+                  <BlueTextTypography gutterBottom variant="h5" component="h2" align="center">
+                    {product.name}
+                  </BlueTextTypography>
+                  <TableContainer>
+                    <Table aria-label="simple table">
+                      <TableBody>
+                      <TableRow>
+                          <TableCell component="th" scope="row">
+                            Price (RM)
+                          </TableCell>
+                          <TableCell align="right">
+                            <b>{product.price}</b>
+                          </TableCell>
+                        </TableRow>
                         <TableRow>
-                            <TableCell component="th" scope="row">
-                              Price (RM)
-                            </TableCell>
-                            <TableCell align="right">
-                              <b>{product.price}</b>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell component="th" scope="row">
-                              Category
-                            </TableCell>
-                            <TableCell align="right">
-                              <b>{product.category}</b>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell width="250px" component="th" scope="row">
-                              Stock
-                            </TableCell>
-                            <TableCell align="right">
-                              <b>{product.stock}</b>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell component="th" scope="row">
-                              Brand
-                            </TableCell>
-                            <TableCell align="right">
-                              <b>{product.brand}</b>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell component="th" scope="row">
-                              Ship From
-                            </TableCell>
-                            <TableCell align="right">
-                              <b>{product.shipFrom}</b>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell component="th" scope="row">
-                              Seller
-                            </TableCell>
-                            <TableCell align="right">
-                              <b>{product.sellerName}</b>
-                            </TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button size="small" color="primary">
-                    Add to Cart
-                  </Button>
-                  <Button size="small" color="primary">
-                    Buy Now
-                  </Button>
-                </CardActions>
-              </Card>
-            </div>
-          </React.Fragment>
-        );
-    } else {
-        return (
-            <div className="container center">
-                <p>Loading project...</p>
-            </div>
-        )
+                          <TableCell component="th" scope="row">
+                            Category
+                          </TableCell>
+                          <TableCell align="right">
+                            <b>{product.category}</b>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell width="250px" component="th" scope="row">
+                            Stock
+                          </TableCell>
+                          <TableCell align="right">
+                            <b>{product.stock}</b>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell component="th" scope="row">
+                            Brand
+                          </TableCell>
+                          <TableCell align="right">
+                            <b>{product.brand}</b>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell component="th" scope="row">
+                            Ship From
+                          </TableCell>
+                          <TableCell align="right">
+                            <b>{product.shipFrom}</b>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell component="th" scope="row">
+                            Seller
+                          </TableCell>
+                          <TableCell align="right">
+                            <b>{product.sellerName}</b>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <Button size="small" color="primary">
+                  Add to Cart
+                </Button>
+                <Button size="small" color="primary">
+                  Buy Now
+                </Button>
+              </CardActions>
+            </Card>
+          </div>
+        </React.Fragment>
+      );
+  } else {
+      return (
+        <div className="container center">
+          <p>Loading project...</p>
+        </div>
+      )
     }
-    
 }
 
 const mapStateToProps = (state, ownProps) =>{
-    //console.log(state);
-    const id = ownProps.match.params.id;
-    const products = state.firestore.data.products;
-    const product = products ? products[id] : null
-    return {
-        product: product
-    }
+  const id = ownProps.match.params.id;
+  const products = state.firestore.data.products;
+  const product = products ? products[id] : null
+  return {
+    product: product
+  }
 }
 
 
 export default compose (
-    connect(mapStateToProps),
-    firestoreConnect([
-        {collection: 'products'}
-    ])
+  connect(mapStateToProps),
+  firestoreConnect([
+    {collection: 'products'}
+  ])
 )(ProductDetails)

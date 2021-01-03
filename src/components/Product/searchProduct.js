@@ -21,38 +21,11 @@ import ButtonAppBar from "../ButtonAppBar";
 
 export default ({history,location}) => {
 
-  // if(location.state){
-  //   console.log("location", location.state);
-  //   var searchQuery = JSON.stringify(location.state);
-  //   console.log("searchQuery", searchQuery);
-  //   var query = searchQuery.substring(11, searchQuery.length - 2);
-  // }else{
-  //   var query = "su";
-  // }
+  console.log("location", location.state);
+  var searchQuery = JSON.stringify(location.state);
+  console.log("searchQuery", searchQuery);
+  var query = searchQuery.substring(11, searchQuery.length - 2);
 
-    console.log("location", location.state);
-    var searchQuery = JSON.stringify(location.state);
-    console.log("searchQuery", searchQuery);
-    var query = searchQuery.substring(11, searchQuery.length - 2);
-
-
-   // const filteredProducts = products.filter(products => {
-  //   return products.name.toLowerCase().includes(search.toLowerCase())
-  // })
-
-  console.log("query", query);
-  
-  //  filteredProducts = products.filter((products) => {
-  //   return (
-  //     products.name
-  //       .toLowerCase()
-  //       .indexOf(this.state.search.toLowerCase()) !== -1
-  //   );
-  // });
-
-  
-
-  
   return (
     <React.Fragment>
       <CssBaseline />
@@ -65,5 +38,4 @@ export default ({history,location}) => {
       </Container>
     </React.Fragment>
   );
-
 }

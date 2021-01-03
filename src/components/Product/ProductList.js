@@ -8,11 +8,11 @@ import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
     main: {
-      paddingTop: "20px",
-      flexDirection: "column",
-      alignItems: "center",
+        paddingTop: "20px",
+        flexDirection: "column",
+        alignItems: "center",
     },
-  }));
+}));
 
   
 const ProductList = ({products}) => {
@@ -23,13 +23,11 @@ const ProductList = ({products}) => {
             <div className={classes.main}>
                 <Grid container spacing={2} justify="center">
                     {products && products.map(products => {
-                        
-                            return(
-                                <Link to ={'/product/' + products.id}>
-                                    <ProductSummary products = {products} key={products.id} />
-                                </Link>
-                            )
-                        
+                        return(
+                            <Link to ={'/product/' + products.id}>
+                                <ProductSummary products = {products} key={products.id} />
+                            </Link>
+                        )
                     })}
                 </Grid>
             </div>

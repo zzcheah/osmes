@@ -68,11 +68,10 @@ export const editUserAction = (editUser, history) => {
     const firestore = getFirestore ();
     const { firstName, lastName, phone, gender, lastView, lastSecondView } = editUser;
     const user = firebase.auth().currentUser;
-    //console.log('User ID: ', editUser);
     
     firebase
       .auth()
-      .onAuthStateChanged((resp) => {
+      .onAuthStateChanged((resp) => { 
         if(resp){
           return firestore.collection("users").doc(user.uid).set({
             firstName,
@@ -89,10 +88,10 @@ export const editUserAction = (editUser, history) => {
           .catch((err) => {
             NotificationManager.error(err.message);
           });
-        } else {
+        }else{
           
         }
-    });
+      });
   };
 };
 
@@ -102,7 +101,6 @@ export const clickProductAction = (category, history) => {
     const firestore = getFirestore ();
     const { firstName, lastName, phone, gender, lastView, lastSecondView } = category;
     const user = firebase.auth().currentUser;
-    //console.log('LastView: ', category);
     
     firebase
       .auth()
@@ -126,6 +124,6 @@ export const clickProductAction = (category, history) => {
         } else {
           
         }
-    });
+      });
   };
 };

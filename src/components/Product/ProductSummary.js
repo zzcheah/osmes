@@ -15,27 +15,27 @@ import TableRow from "@material-ui/core/TableRow";
 
 const useStyles = makeStyles((theme) => ({
     main: {
-      paddingTop: "20px",
-      flexDirection: "column",
-      alignItems: "center",
+        paddingTop: "20px",
+        flexDirection: "column",
+        alignItems: "center",
     },
     media: {
         height: 50,
         paddingTop: '100%',
       },
-      root: {
+    root: {
         maxWidth: 400,
         maxHeight: 430,
         width: 250,
         height:430,
-      },
-  }));
+    },
+}));
 
-  const BlueTextTypography = withStyles({
+const BlueTextTypography = withStyles({
     root: {
-      color: "#001eb3"
+        color: "#001eb3"
     }
-  })(Typography);
+})(Typography);
 
 
 const ProductSummary = ({products}) => {
@@ -49,11 +49,11 @@ const ProductSummary = ({products}) => {
                     <Grid container spacing={2} justify="center">
                         <Grid item xs={10} key={products.id}>
                             <Card  className={classes.root}>
-                            <CardMedia
-                            className={classes.media}
-                            image= {products.images?products.images[0].url:null}
-                            title= {products.name}
-                            />
+                                <CardMedia
+                                    className={classes.media}
+                                    image= {products.images?products.images[0].url:null}
+                                    title= {products.name}
+                                />
                                 <CardContent>
                                     <div style={{height:"70px"}}>
                                         <Typography gutterBottom variant="h5" component="h2" align="center">
