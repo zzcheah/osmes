@@ -13,6 +13,9 @@ import firebase from "../../configs/firebaseConfig";
 import { Link } from "react-router-dom";
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
+import ButtonAppBar from "../ButtonAppBar";
+import { useHistory, useParams, Redirect, NavLink } from "react-router-dom";
+
 
 class ViewProduct extends React.Component {
     constructor() {
@@ -44,6 +47,17 @@ class ViewProduct extends React.Component {
 
         return (
             <div>
+                <Grid align="center">
+                    <NavLink position="static" to="/" style={{width:"40%", height:"40%", display: "block"}}>
+                        <img
+                        alt="osmes"
+                        src={"images/logo.png"}
+                        style={{width:"50%", height:"50%", display: "block", padding: "20px 50px 10px 50px"}}
+                        //className={classes.logoNew}
+                        />
+                            
+                    </NavLink> 
+                </Grid>
                 <div
                     style={{
                     display: "flex",
