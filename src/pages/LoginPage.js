@@ -17,6 +17,7 @@ import { useState } from "react";
 
 import { loginAction } from "../redux/actions/authActions";
 import ForgetPasswordDialog from "../components/layout/ForgetPasswordDialog";
+import OtherLogin from "../components/layout/OtherLogin";
 
 function Copyright() {
   return (
@@ -166,9 +167,11 @@ export default function LoginPage() {
           </Grid>
         </form>
       </div>
+      <OtherLogin />
       <Box mt={8}>
         <Copyright />
       </Box>
+
       <ForgetPasswordDialog open={open} setOpen={setOpen} />
     </Container>
   );

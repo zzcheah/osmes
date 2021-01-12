@@ -1,4 +1,5 @@
 import { NotificationManager } from "react-notifications";
+import { toggleLoading } from "./appActions";
 
 export const loginAction = (credentials) => {
   return (dispatch, getState, { getFirebase }) => {
@@ -9,6 +10,46 @@ export const loginAction = (credentials) => {
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
         NotificationManager.success("Login Success");
+      })
+      .catch((err) => {
+        NotificationManager.error(err.message);
+      });
+  };
+};
+
+export const loginWithGoogle = (credentials) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    dispatch(toggleLoading());
+
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log(result);
+        if (result.additionalUserInfo.isNewUser) {
+          const uid = result.user.uid;
+          const profile = result.additionalUserInfo.profile;
+          firestore
+            .collection("users")
+            .doc(uid)
+            .set({
+              firstName: profile.given_name,
+              lastName: profile.family_name,
+              phone: "",
+            })
+            .then(() => {
+              dispatch(toggleLoading());
+              NotificationManager.success("Login Success");
+            });
+        } else {
+          dispatch(toggleLoading());
+          NotificationManager.success("Login Success");
+        }
       })
       .catch((err) => {
         NotificationManager.error(err.message);
@@ -77,18 +118,19 @@ export const signupAction = (newUser, history) => {
 };
 
 export const editUserAction = (editUser, history) => {
-  return (dispatch, getState, { getFirebase, getFirestore}) => {
-    const firebase = getFirebase ();
-    const firestore = getFirestore ();
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
     const { firstName, lastName, phone } = editUser;
     const user = firebase.auth().currentUser;
-    console.log('User ID: ', editUser);
-    
-    firebase
-      .auth()
-      .onAuthStateChanged((resp) => {
-        if(resp){
-          return firestore.collection("users").doc(user.uid).set({
+    console.log("User ID: ", editUser);
+
+    firebase.auth().onAuthStateChanged((resp) => {
+      if (resp) {
+        return firestore
+          .collection("users")
+          .doc(user.uid)
+          .set({
             firstName,
             lastName,
             phone,
@@ -100,9 +142,8 @@ export const editUserAction = (editUser, history) => {
           .catch((err) => {
             NotificationManager.error(err.message);
           });
-        } else {
-          
-        }
+      } else {
+      }
       //});
       //.updateCurrentUser()
       // .then((resp) => {
