@@ -13,12 +13,9 @@ import AddProductForm from "./pages/AddProductForm";
 import EditProductForm from "./pages/EditProductForm";
 import MyProducts from "./pages/MyProducts";
 import EditUserPage from "./pages/EditUserPage";
-import ProductSummary from "./components/Product/ProductSummary"
 
 import { logoutAction } from "./redux/actions/authActions";
 import searchProduct from "./components/Product/searchProduct";
-import ViewProduct from "./components/Product/ViewProduct";
-
 
 // splash screen
 function AuthIsLoaded({ children }) {
@@ -64,8 +61,6 @@ function PrivateRoute({ component, ...rest }) {
 }
 
 function App() {
-
-
   useFirestoreConnect([
     {
       collection: "categories",

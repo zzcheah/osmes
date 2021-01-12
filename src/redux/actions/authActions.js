@@ -33,6 +33,22 @@ export const logoutAction = () => {
   };
 };
 
+export const sendRecoveryEmail = (email) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        NotificationManager.success("Recovery Email sent");
+      })
+      .catch((err) => {
+        NotificationManager.error(err.message);
+      });
+  };
+};
+
 export const signupAction = (newUser, history) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();

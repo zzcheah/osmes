@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
 import { loginAction } from "../redux/actions/authActions";
+import ForgetPasswordDialog from "../components/layout/ForgetPasswordDialog";
 
 function Copyright() {
   return (
@@ -59,11 +60,12 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const history = useHistory();
   const firebase = useSelector((state) => state.firebase);
   const dispatch = useDispatch();
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(credentials);
@@ -75,6 +77,10 @@ export default function LoginPage() {
       ...credentials,
       [e.target.id]: e.target.value,
     });
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   if (!firebase.auth.isEmpty && firebase.auth.isLoaded)
@@ -144,7 +150,7 @@ export default function LoginPage() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" onClick={handleClickOpen}>
                 Forgot password?
               </Link>
             </Grid>
@@ -163,6 +169,7 @@ export default function LoginPage() {
       <Box mt={8}>
         <Copyright />
       </Box>
+      <ForgetPasswordDialog open={open} setOpen={setOpen} />
     </Container>
   );
 }
