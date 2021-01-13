@@ -41,6 +41,9 @@ export const loginWithGoogle = (credentials) => {
               firstName: profile.given_name,
               lastName: profile.family_name,
               phone: "",
+              gender: "",
+              lastView: "",
+              lastSecondView: "",
             })
             .then(() => {
               dispatch(toggleLoading());
@@ -120,12 +123,56 @@ export const signupAction = (newUser, history) => {
 };
 
 export const editUserAction = (editUser, history) => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firebase = getFirebase();
-    const firestore = getFirestore();
-    const { firstName, lastName, phone } = editUser;
+  return (dispatch, getState, { getFirebase, getFirestore}) => {
+    const firebase = getFirebase ();
+    const firestore = getFirestore ();
+    const { firstName, lastName, phone, gender, lastView, lastSecondView } = editUser;
     const user = firebase.auth().currentUser;
-    console.log("User ID: ", editUser);
+    
+    firebase
+      .auth()
+      .onAuthStateChanged((resp) => { 
+        if(resp){
+          return firestore.collection("users").doc(user.uid).set({
+            firstName,
+            lastName,
+            phone,
+            gender,
+            lastView,
+            lastSecondView,
+          })
+          .then(() => {
+            NotificationManager.success("Edit profile successfully");
+            history.push("/");
+          })
+          .catch((err) => {
+            NotificationManager.error(err.message);
+          });
+        }else{
+          
+        }
+      });
+  };
+};
+
+export const clickProductAction = (category, history) => {
+  return (dispatch, getState, { getFirebase, getFirestore}) => {
+    const firebase = getFirebase ();
+    const firestore = getFirestore ();
+    const { firstName, lastName, phone, gender, lastView, lastSecondView } = category;
+    const user = firebase.auth().currentUser;
+    
+  //   firebase
+  //     .auth()
+  //     .onAuthStateChanged((resp) => {
+  //       if(resp){
+  //         return firestore.collection("users").doc(user.uid).set({
+  // return (dispatch, getState, { getFirebase, getFirestore }) => {
+  //   const firebase = getFirebase();
+  //   const firestore = getFirestore();
+  //   const { firstName, lastName, phone } = editUser;
+  //   const user = firebase.auth().currentUser;
+  //   console.log("User ID: ", editUser);
 
     firebase.auth().onAuthStateChanged((resp) => {
       if (resp) {
