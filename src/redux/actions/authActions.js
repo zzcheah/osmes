@@ -1,4 +1,5 @@
 import { NotificationManager } from "react-notifications";
+import { toggleLoading } from "./appActions";
 
 export const loginAction = (credentials) => {
   return (dispatch, getState, { getFirebase }) => {
@@ -16,6 +17,46 @@ export const loginAction = (credentials) => {
   };
 };
 
+export const loginWithGoogle = (credentials) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    dispatch(toggleLoading());
+
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log(result);
+        if (result.additionalUserInfo.isNewUser) {
+          const uid = result.user.uid;
+          const profile = result.additionalUserInfo.profile;
+          firestore
+            .collection("users")
+            .doc(uid)
+            .set({
+              firstName: profile.given_name,
+              lastName: profile.family_name,
+              phone: "",
+            })
+            .then(() => {
+              dispatch(toggleLoading());
+              NotificationManager.success("Login Success");
+            });
+        } else {
+          dispatch(toggleLoading());
+          NotificationManager.success("Login Success");
+        }
+      })
+      .catch((err) => {
+        NotificationManager.error(err.message);
+      });
+  };
+};
+
 export const logoutAction = () => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -26,6 +67,22 @@ export const logoutAction = () => {
       .then(() => {
         firebase.logout();
         NotificationManager.success("Logout Success");
+      })
+      .catch((err) => {
+        NotificationManager.error(err.message);
+      });
+  };
+};
+
+export const sendRecoveryEmail = (email) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        NotificationManager.success("Recovery Email sent");
       })
       .catch((err) => {
         NotificationManager.error(err.message);
@@ -63,50 +120,19 @@ export const signupAction = (newUser, history) => {
 };
 
 export const editUserAction = (editUser, history) => {
-  return (dispatch, getState, { getFirebase, getFirestore}) => {
-    const firebase = getFirebase ();
-    const firestore = getFirestore ();
-    const { firstName, lastName, phone, gender, lastView, lastSecondView } = editUser;
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    const { firstName, lastName, phone } = editUser;
     const user = firebase.auth().currentUser;
-    
-    firebase
-      .auth()
-      .onAuthStateChanged((resp) => { 
-        if(resp){
-          return firestore.collection("users").doc(user.uid).set({
-            firstName,
-            lastName,
-            phone,
-            gender,
-            lastView,
-            lastSecondView,
-          })
-          .then(() => {
-            NotificationManager.success("Edit profile successfully");
-            history.push("/");
-          })
-          .catch((err) => {
-            NotificationManager.error(err.message);
-          });
-        }else{
-          
-        }
-      });
-  };
-};
+    console.log("User ID: ", editUser);
 
-export const clickProductAction = (category, history) => {
-  return (dispatch, getState, { getFirebase, getFirestore}) => {
-    const firebase = getFirebase ();
-    const firestore = getFirestore ();
-    const { firstName, lastName, phone, gender, lastView, lastSecondView } = category;
-    const user = firebase.auth().currentUser;
-    
-    firebase
-      .auth()
-      .onAuthStateChanged((resp) => {
-        if(resp){
-          return firestore.collection("users").doc(user.uid).set({
+    firebase.auth().onAuthStateChanged((resp) => {
+      if (resp) {
+        return firestore
+          .collection("users")
+          .doc(user.uid)
+          .set({
             firstName,
             lastName,
             phone,
@@ -121,9 +147,24 @@ export const clickProductAction = (category, history) => {
           .catch((err) => {
             NotificationManager.error(err.message);
           });
-        } else {
-          
-        }
-      });
+      } else {
+      }
+      //});
+      //.updateCurrentUser()
+      // .then((resp) => {
+      //   return firestore.collection("users").doc(resp.user.uid).set({
+      //     firstName,
+      //     lastName,
+      //     phone,
+      //  });
+      // })
+      // .then(() => {
+      //   NotificationManager.success("Edit success");
+      //   history.push("/");
+      // })
+      // .catch((err) => {
+      //   NotificationManager.error(err.message);
+      // });
+    });
   };
 };
